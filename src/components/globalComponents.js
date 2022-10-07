@@ -15,3 +15,11 @@ export const PageContainer = styled.div`
 		display: none;
 	}
 `;
+
+export const BackButton = styled.span`
+	${tw`absolute z-20 text-white text-2xl p-4`}
+
+	&:hover {
+		transform: scale(1.2);
+	}
+`;
