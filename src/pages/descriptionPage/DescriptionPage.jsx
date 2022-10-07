@@ -1,10 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { BackButton, PageContainer } from '../../components/globalComponents';
+import {
+	BackButton,
+	PageContainer,
+	MovieRow,
+	MoviePoster,
+} from '../../components/globalComponents';
 import { MoviesContext } from '../../contexts/moviesContext';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { MdArrowBackIosNew } from 'react-icons/md';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import axios from 'axios';
 
 const MovieHeroImage = styled.img`
@@ -12,15 +17,17 @@ const MovieHeroImage = styled.img`
 	height: 320px;
 	object-fit: cover;
 	object-position: 50% 50%;
+
 	${tw``}
 `;
 const ImageContainer = styled.div`
-	${tw`w-full h-[320px]`}
+	${tw`w-full h-[320px] relative`}
 `;
 
 const ImageOverlay = styled.div`
 	background: linear-gradient(rgba(0, 130, 170, 0), #000000);
 	position: absolute;
+	top: 0;
 	width: 100%;
 	height: 320px;
 `;
@@ -47,7 +54,7 @@ const MovieOverview = styled.p`
 `;
 
 const GenreContainer = styled.div`
-	${tw`flex flex-wrap items-center justify-start`}
+	${tw`flex w-[95%] flex-wrap items-center justify-start`}
 `;
 
 const GenreBlock = styled.div`
@@ -58,41 +65,63 @@ const GenreText = styled.p`
 	${tw`text-sm font-bold text-gray-900`}
 `;
 
-const DescriptionPage = () => {
-	const { currentMovie } = useContext(MoviesContext);
-	const [genres, setGenres] = useState([]);
+const RecommendationContainer = styled(MovieRow)`
+	${tw`w-full flex-wrap overflow-visible justify-around p-0`}
+`;
+const RecommendationTitle = styled.h3`
+	${tw`text-xl text-white font-bold ml-4 mt-5 mb-2`}
+`;
 
-	const getMovieGenres = async () => {
+const DescriptionPage = () => {
+	const { currentMovie, getCurrentMovie } = useContext(MoviesContext);
+	const [genres, setGenres] = useState([]);
+	const [recommendations, setRecommendations] = useState([]);
+
+	const [location, setLocation] = useLocation();
+
+	const getMovieGenresAndRecommendations = async () => {
 		const genreList = [];
+
 		// Check if movie or TV show
-		if (currentMovie.first_air_date) {
-			let response = await axios.get(
-				`https://api.themoviedb.org/3/tv/${currentMovie.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`
-			);
-			const genres = response.data.genres;
-			genres.forEach((genre) => {
-				genreList.push(genre.name);
-			});
-			setGenres(genreList);
-		} else {
-			let response = await axios.get(
-				`https://api.themoviedb.org/3/movie/${currentMovie.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`
-			);
-			const genres = response.data.genres;
-			genres.forEach((genre) => {
-				genreList.push(genre.name);
-			});
-			setGenres(genreList.slice(0, 2));
-		}
+		const isTVShow = currentMovie.first_air_date;
+
+		let genres = await axios.get(
+			`https://api.themoviedb.org/3/${isTVShow ? 'tv' : 'movie'}/${
+				currentMovie.id
+			}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`
+		);
+		let recommendations = await axios.get(
+			`https://api.themoviedb.org/3/${isTVShow ? 'tv' : 'movie'}/${
+				currentMovie.id
+			}/recommendations?api_key=${
+				process.env.REACT_APP_MOVIEDB_API_KEY
+			}&language=en-US&page=1`
+		);
+
+		const genreData = genres.data.genres;
+		const recommData = recommendations.data.results;
+
+		genreData.forEach((genre) => {
+			genreList.push(genre.name);
+		});
+		setGenres(genreList);
+		setRecommendations(recommData);
 	};
 
+	// Some objects have 'name' properties some have 'titles' instead
 	const mediaTitle = currentMovie.title;
 	const mediaName = currentMovie.name;
 
+	const redirectToInfoPage = async (movie) => {
+		await getCurrentMovie(movie);
+		setLocation(
+			`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
+		);
+	};
+
 	useEffect(() => {
-		getMovieGenres();
-		console.log(currentMovie.name.length > 30);
-	}, []);
+		getMovieGenresAndRecommendations();
+	}, [currentMovie]);
 
 	return (
 		<PageContainer>
@@ -126,10 +155,21 @@ const DescriptionPage = () => {
 			<GenreContainer>
 				{genres.map((genre) => (
 					<GenreBlock>
-						<GenreText>{genre}</GenreText>
+						<GenreText key={genre}>{genre}</GenreText>
 					</GenreBlock>
 				))}
 			</GenreContainer>
+			<RecommendationTitle>More Like This</RecommendationTitle>
+			<RecommendationContainer>
+				{recommendations.map((movie) => (
+					<MoviePoster
+						key={movie.id}
+						src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+						alt={movie.title}
+						onClick={() => redirectToInfoPage(movie)}
+					/>
+				))}
+			</RecommendationContainer>
 		</PageContainer>
 	);
 };

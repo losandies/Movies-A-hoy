@@ -16,6 +16,23 @@ export const PageContainer = styled.div`
 	}
 `;
 
+export const MovieRow = styled.div`
+	${tw`flex overflow-x-auto p-2 md:mt-4 md:p-4`}
+
+	&::-webkit-scrollbar {
+		display: none;
+	}
+`;
+
+export const MoviePoster = styled.img`
+	${tw`m-2 w-28 md:w-40 rounded-sm cursor-pointer`}
+	transition: ease-in-out 150ms;
+
+	&:hover {
+		transform: scale(1.15);
+	}
+`;
+
 export const BackButton = styled.span`
 	${tw`absolute z-20 text-white text-2xl p-4`}
 
