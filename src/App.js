@@ -4,9 +4,17 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { Route } from 'wouter';
+import { useLocation } from 'wouter';
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	useNavigate,
+	redirect,
+} from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
+import SearchPage from './pages/SearchPage';
 
 const AppContainer = styled.div`
 	${tw`
@@ -28,6 +36,7 @@ function App() {
 	});
 
 	const [currentMovie, setCurrentMovie] = useState({});
+	const [currentPage, setCurrentPage] = useState('home');
 
 	const fetchMovieData = async () => {
 		const nowPlaying = await axios.get(
@@ -60,23 +69,34 @@ function App() {
 		});
 	};
 
-	const getCurrentMovie = (payload) => {
+	const redirectToInfoPage = async (payload) => {
 		setCurrentMovie(payload);
 	};
 
 	useEffect(() => {
 		fetchMovieData();
-	}, []);
+	}, [movieData]);
 
 	return (
-		<MoviesContext.Provider
-			value={{ movieData, getCurrentMovie, currentMovie }}
-		>
-			<AppContainer>
-				<Route path="/" component={HomePage} />
-				<Route path="/:mediaType/:id" component={DescriptionPage} />
-			</AppContainer>
-		</MoviesContext.Provider>
+		<Router>
+			<MoviesContext.Provider
+				value={{
+					movieData,
+					currentMovie,
+					setCurrentMovie,
+					currentPage,
+					setCurrentPage,
+				}}
+			>
+				<AppContainer>
+					<Routes>
+						<Route path="/" element={<HomePage />} />
+						<Route path="/:mediaType/:id" element={<DescriptionPage />} />
+						<Route path="/search" element={<SearchPage />} />
+					</Routes>
+				</AppContainer>
+			</MoviesContext.Provider>
+		</Router>
 	);
 }
 

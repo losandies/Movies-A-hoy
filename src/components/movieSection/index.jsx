@@ -6,6 +6,7 @@ import tw from 'twin.macro';
 import { Link, useLocation } from 'wouter';
 import { MovieRow } from '../globalComponents';
 import { MoviePoster } from '../globalComponents';
+import { useNavigate } from 'react-router-dom';
 
 const SectionContainer = styled.div`
 	${tw`mt-8`}
@@ -18,16 +19,8 @@ const SectionTitle = styled.h2`
 export default function MovieSection({ movies, sectionTitle }) {
 	// const [currentMovie, setCurrentMovie] = useState({});
 
-	const { getCurrentMovie, currentMovie } = useContext(MoviesContext);
-	const [location, setLocation] = useLocation();
-
-	const redirectToInfoPage = async (movie) => {
-		await getCurrentMovie(movie);
-		console.log(currentMovie);
-		setLocation(
-			`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
-		);
-	};
+	const { setCurrentMovie, currentMovie } = useContext(MoviesContext);
+	const navigate = useNavigate();
 
 	return (
 		<SectionContainer>
@@ -40,7 +33,12 @@ export default function MovieSection({ movies, sectionTitle }) {
 						key={movie.id}
 						src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
 						alt={movie.title}
-						onClick={() => redirectToInfoPage(movie)}
+						onClick={() => {
+							setCurrentMovie(movie);
+							navigate(
+								`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
+							);
+						}}
 					/>
 				))}
 			</MovieRow>

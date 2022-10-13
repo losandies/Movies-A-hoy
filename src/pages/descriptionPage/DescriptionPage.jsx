@@ -9,8 +9,10 @@ import { MoviesContext } from '../../contexts/moviesContext';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { MdArrowBackIosNew } from 'react-icons/md';
-import { Link, useLocation } from 'wouter';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import DescriptionOverlay from '../../components/descriptionOverlay';
 
 const MovieHeroImage = styled.img`
 	width: 100%;
@@ -33,7 +35,7 @@ const ImageOverlay = styled.div`
 `;
 
 const MovieTitleContainer = styled.div`
-	${tw`absolute z-10 w-full p-4`}
+	${tw`absolute z-10 w-[80%] p-4`}
 `;
 
 const MovieTitle = styled.h2`
@@ -73,14 +75,21 @@ const RecommendationTitle = styled.h3`
 `;
 
 const DescriptionPage = () => {
-	const { currentMovie, getCurrentMovie } = useContext(MoviesContext);
+	const { currentMovie, setCurrentMovie, currentPage } =
+		useContext(MoviesContext);
 	const [genres, setGenres] = useState([]);
 	const [recommendations, setRecommendations] = useState([]);
-
-	const [location, setLocation] = useLocation();
+	const [descriptionIsClicked, setDescriptionIsClicked] = useState(false);
+	const navigate = useNavigate();
 
 	const getMovieGenresAndRecommendations = async () => {
 		const genreList = [];
+		let getMovieById = await axios.get(
+			`https://api.themoviedb.org/3/find/${currentMovie.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
+		);
+
+		const movieData = getMovieById.data;
+		console.log(movieData);
 
 		// Check if movie or TV show
 		const isTVShow = currentMovie.first_air_date;
@@ -112,11 +121,8 @@ const DescriptionPage = () => {
 	const mediaTitle = currentMovie.title;
 	const mediaName = currentMovie.name;
 
-	const redirectToInfoPage = async (movie) => {
-		await getCurrentMovie(movie);
-		setLocation(
-			`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
-		);
+	const closeDescriptionOverlay = () => {
+		setDescriptionIsClicked(false);
 	};
 
 	useEffect(() => {
@@ -124,53 +130,76 @@ const DescriptionPage = () => {
 	}, [currentMovie]);
 
 	return (
-		<PageContainer>
-			<ImageContainer>
-				<BackButton>
-					<Link href="/">
-						<MdArrowBackIosNew />
-					</Link>
-				</BackButton>
-				<MovieTitleContainer
-					className={`
+		<>
+			{descriptionIsClicked ? (
+				<DescriptionOverlay
+					description={currentMovie.overview}
+					closeDescriptionOverlay={closeDescriptionOverlay}
+				/>
+			) : null}
+			<PageContainer>
+				<ImageContainer>
+					<BackButton>
+						<Link
+							to={
+								currentPage === 'home'
+									? '/'
+									: currentPage === 'search'
+									? '/search'
+									: null
+							}
+						>
+							<MdArrowBackIosNew />
+						</Link>
+					</BackButton>
+					<MovieTitleContainer
+						className={`
 				${
-					(mediaName && mediaName.length > 30) ||
-					(mediaTitle && mediaTitle.length > 30)
+					(mediaName && mediaName.length > 20) ||
+					(mediaTitle && mediaTitle.length > 20)
 						? 'top-56'
 						: 'top-64'
 				}`}
-				>
-					<MovieTitle>{mediaName || mediaTitle}</MovieTitle>
-				</MovieTitleContainer>
-				<ImageOverlay />
-				<MovieHeroImage
-					src={`https://image.tmdb.org/t/p/original/${currentMovie.backdrop_path}`}
-					alt={currentMovie.name}
-				/>
-			</ImageContainer>
-
-			<MovieOverviewContainer>
-				<MovieOverview>{currentMovie.overview}</MovieOverview>
-			</MovieOverviewContainer>
-			<GenreContainer>
-				{genres.map((genre) => (
-					<GenreBlock>
-						<GenreText key={genre}>{genre}</GenreText>
-					</GenreBlock>
-				))}
-			</GenreContainer>
-			<RecommendationTitle>More Like This</RecommendationTitle>
-			<RecommendationContainer>
-				{recommendations.map((movie) => (
-					<MoviePoster
-						key={movie.id}
-						src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-						alt={movie.title}
-						onClick={() => redirectToInfoPage(movie)}
+					>
+						<MovieTitle>{mediaName || mediaTitle}</MovieTitle>
+					</MovieTitleContainer>
+					<ImageOverlay />
+					<MovieHeroImage
+						src={`https://image.tmdb.org/t/p/original/${currentMovie.backdrop_path}`}
+						alt={currentMovie.name}
 					/>
-				))}
-			</RecommendationContainer>
-		</PageContainer>
+				</ImageContainer>
+
+				<MovieOverviewContainer onClick={() => setDescriptionIsClicked(true)}>
+					<MovieOverview>{currentMovie.overview}</MovieOverview>
+				</MovieOverviewContainer>
+				<GenreContainer>
+					{genres.map((genre) => (
+						<GenreBlock>
+							<GenreText key={genre}>{genre}</GenreText>
+						</GenreBlock>
+					))}
+				</GenreContainer>
+				<RecommendationTitle>More Like This</RecommendationTitle>
+				<RecommendationContainer>
+					{recommendations.map((movie) => (
+						<MoviePoster
+							key={movie.id}
+							src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+							alt={movie.title}
+							onClick={() => {
+								setCurrentMovie(movie);
+								navigate(
+									`/${movie.media_type ? movie.media_type : 'media'}/${
+										movie.id
+									}`
+								);
+							}}
+						/>
+					))}
+				</RecommendationContainer>
+			</PageContainer>
+		</>
 	);
 };
 

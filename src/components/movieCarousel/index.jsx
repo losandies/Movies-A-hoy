@@ -6,8 +6,10 @@ import 'swiper/css/autoplay';
 
 import tw from 'twin.macro';
 import styled from 'styled-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Autoplay, Pagination } from 'swiper';
+import { useNavigate } from 'react-router-dom';
+import { MoviesContext } from '../../contexts/moviesContext';
 
 const CarouselContainer = styled.div`
 	${tw`w-full h-64 min-h-[16rem]`}
@@ -57,6 +59,8 @@ const NowPlayingContainer = styled.div`
 
 export default function MovieCarousel({ movies }) {
 	const top10Movies = movies.slice(0, 10);
+	const { setCurrentMovie } = useContext(MoviesContext);
+	const navigate = useNavigate();
 
 	return (
 		<>
@@ -81,7 +85,17 @@ export default function MovieCarousel({ movies }) {
 					className="mySwiper"
 				>
 					{top10Movies.map((movie) => (
-						<StyledSlide key={movie.id}>
+						<StyledSlide
+							key={movie.id}
+							onClick={() => {
+								setCurrentMovie(movie);
+								navigate(
+									`/${movie.media_type ? movie.media_type : 'media'}/${
+										movie.id
+									}`
+								);
+							}}
+						>
 							<TitleContainer>
 								<MovieTitle>{movie.title}</MovieTitle>
 							</TitleContainer>

@@ -7,7 +7,11 @@ import axios from 'axios';
 import { PageContainer } from '../../components/globalComponents';
 
 export default function HomePage() {
-	const { movieData } = useContext(MoviesContext);
+	const { movieData, setCurrentPage } = useContext(MoviesContext);
+
+	useEffect(() => {
+		setCurrentPage('home');
+	});
 
 	return (
 		<PageContainer>

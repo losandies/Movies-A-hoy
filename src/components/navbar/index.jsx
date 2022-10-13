@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { NavItems } from './navItems';
@@ -30,7 +31,9 @@ export function NavBar() {
 	return (
 		<NavContainer>
 			<LogoContainer>
-				<LogoLettering>Hello</LogoLettering>
+				<Link to="/">
+					<LogoLettering>Movies A'hoy</LogoLettering>
+				</Link>
 			</LogoContainer>
 			<NavItems />
 		</NavContainer>
