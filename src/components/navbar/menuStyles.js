@@ -1,10 +1,11 @@
 export default {
 	bmBurgerButton: {
-		position: 'absolute',
+		position: 'relative',
 		width: '20px',
 		height: '20px',
-		right: '20px',
-		top: '20px',
+		// right: '20px',
+		// top: '20px',
+		marginLeft: '0.75rem',
 	},
 	bmBurgerBars: {
 		background: 'white',

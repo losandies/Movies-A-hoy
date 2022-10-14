@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { NavItems } from './navItems';
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../../responsive/screens';
+import { HiSearch } from 'react-icons/hi';
 
 const NavContainer = styled.div`
 	min-height: 68px;
@@ -28,6 +31,25 @@ const LogoLettering = styled.h3`
 `;
 
 export function NavBar() {
+	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
+
+	if (isMobile)
+		return (
+			<NavContainer>
+				<NavItems />
+				<LogoContainer>
+					<Link to="/">
+						<LogoLettering>Movies A'hoy</LogoLettering>
+					</Link>
+				</LogoContainer>
+				<LogoContainer>
+					<Link to="/search">
+						<HiSearch className="text-2xl font-semibold text-white mr-3" />
+					</Link>
+				</LogoContainer>
+			</NavContainer>
+		);
+
 	return (
 		<NavContainer>
 			<LogoContainer>

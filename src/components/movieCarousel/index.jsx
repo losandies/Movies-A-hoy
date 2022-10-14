@@ -46,12 +46,13 @@ const Rating = styled.h3`
 `;
 
 const NowPlayingText = styled.h3`
-	font-family: 'Poppins';
-	${tw`text-2xl text-white font-semibold mx-4`}
+	/* font-family: 'Poppins'; */
+	/* ${tw`text-2xl text-white font-semibold mx-4`} */
+	${tw`text-base md:text-2xl text-white font-bold uppercase mx-4`}
 `;
 
 const NowPlayingContainer = styled.div`
-	${tw`w-full h-10 mb-4`}
+	${tw`w-full h-10 mb-4 md:p-4`}
 `;
 
 // Note
