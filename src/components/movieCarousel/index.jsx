@@ -1,62 +1,54 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/pagination';
+// import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
+import '../../App.css';
 
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import { Autoplay, Pagination } from 'swiper';
+import { Autoplay, Navigation, Pagination } from 'swiper';
 import { useNavigate } from 'react-router-dom';
 import { MoviesContext } from '../../contexts/moviesContext';
 
 const CarouselContainer = styled.div`
-	${tw`w-full h-64 min-h-[16rem]`}
+	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem]`}
 `;
 
 const StyledSwiper = styled(Swiper)`
 	${tw`w-[95%] h-full rounded-md`}
 `;
 
-const StyledSlide = styled(SwiperSlide)`
-	${tw`text-center bg-white`}
-`;
-
 const MovieImage = styled.img`
+	object-fit: cover;
 	${tw`w-full h-full absolute`}
 `;
 
-const MovieTitle = styled.h3`
-	font-family: 'Poppins';
-	${tw` text-white font-semibold text-lg ml-2`}
+const ImageOverlay = styled.div`
+	background: linear-gradient(rgba(0, 130, 170, 0), #000000);
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
 `;
 
-const TitleContainer = styled.div`
-	${tw`w-full h-12 bg-[#1a1a1a] z-10 flex items-center`}
+const MovieTitleContainer = styled.div`
+	${tw`absolute bottom-1 z-10 w-full p-4`}
 `;
 
-const RatingContainer = styled.div`
-	${tw`w-10 h-10 rounded-full bg-[#1a1a1a] z-10 absolute bottom-5 right-5 flex justify-center items-center`}
-`;
-
-const Rating = styled.h3`
-	font-family: 'Poppins';
-	${tw`text-white font-semibold text-base`}
+const MovieTitle = styled.h2`
+	${tw`text-white text-xl font-semibold`}
 `;
 
 const NowPlayingText = styled.h3`
-	/* font-family: 'Poppins'; */
-	/* ${tw`text-2xl text-white font-semibold mx-4`} */
 	${tw`text-base md:text-2xl text-white font-bold uppercase mx-4`}
 `;
 
 const NowPlayingContainer = styled.div`
 	${tw`w-full h-10 mb-4 md:p-4`}
 `;
-
-// Note
-// Change carousel UI, #IDEA - Create gradient overlay light to dark going downward, put movie info in dark area
 
 export default function MovieCarousel({ movies }) {
 	const top10Movies = movies.slice(0, 10);
@@ -70,23 +62,21 @@ export default function MovieCarousel({ movies }) {
 			</NowPlayingContainer>
 			<CarouselContainer>
 				<StyledSwiper
+					cssMode={true}
 					slidesPerView={1}
 					spaceBetween={20}
 					loop={true}
-					pagination={{
-						clickable: true,
-						dynamicBullets: true,
-					}}
+					navigation={true}
 					autoplay={{
 						delay: 5500,
 						disableOnInteraction: true,
 						pauseOnMouseEnter: true,
 					}}
-					modules={[Pagination, Autoplay]}
+					modules={[Navigation, Autoplay]}
 					className="mySwiper"
 				>
 					{top10Movies.map((movie) => (
-						<StyledSlide
+						<SwiperSlide
 							key={movie.id}
 							onClick={() => {
 								setCurrentMovie(movie);
@@ -97,21 +87,27 @@ export default function MovieCarousel({ movies }) {
 								);
 							}}
 						>
-							<TitleContainer>
+							{/* <TitleContainer>
 								<MovieTitle>{movie.title}</MovieTitle>
-							</TitleContainer>
-							<RatingContainer>
+							</TitleContainer> */}
+
+							{/* <RatingContainer>
 								<Rating>
 									{Number.isInteger(movie.vote_average)
 										? `${movie.vote_average}.0`
 										: movie.vote_average}
 								</Rating>
-							</RatingContainer>
+							</RatingContainer> */}
+							<ImageOverlay />
+							<MovieTitleContainer>
+								<MovieTitle>{movie.title}</MovieTitle>
+							</MovieTitleContainer>
+
 							<MovieImage
 								src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
 								alt="movie-img"
 							/>
-						</StyledSlide>
+						</SwiperSlide>
 					))}
 				</StyledSwiper>
 			</CarouselContainer>
