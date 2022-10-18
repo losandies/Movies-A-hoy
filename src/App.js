@@ -73,9 +73,12 @@ function App() {
 			>
 				<AppContainer>
 					<Routes>
-						<Route path="/" element={<HomePage />} />
-						<Route path="/:mediaType/:id" element={<DescriptionPage />} />
-						<Route path="/search" element={<SearchPage />} />
+						<Route path="/Movies-A-hoy" element={<HomePage />} />
+						<Route
+							path="/Movies-A-hoy/:mediaType/:id"
+							element={<DescriptionPage />}
+						/>
+						<Route path="/Movies-A-hoy/search" element={<SearchPage />} />
 					</Routes>
 				</AppContainer>
 			</MoviesContext.Provider>

@@ -9,7 +9,7 @@ import { HiSearch } from 'react-icons/hi';
 
 const NavContainer = styled.div`
 	min-height: 68px;
-	${tw`w-full max-w-screen-2xl flex flex-row items-center md:px-4 justify-between mb-[25px]`}
+	${tw`w-full max-w-screen-2xl flex flex-row items-center justify-between mb-[25px]`}
 `;
 const LogoContainer = styled.div`
 	${tw`flex items-center ml-3 md:mx-8`};
