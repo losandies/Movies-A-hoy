@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { MoviesContext } from '../../contexts/moviesContext';
+import { MoviesContext } from '../contexts/moviesContext';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { MovieRow } from '../globalComponents';
-import { MoviePoster } from '../globalComponents';
+import { MovieRow } from './globalComponents';
+import { MoviePoster } from './globalComponents';
 import { useNavigate } from 'react-router-dom';
 
 const SectionContainer = styled.div`

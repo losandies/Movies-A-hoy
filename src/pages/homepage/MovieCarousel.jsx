@@ -10,6 +10,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import '../../App.css';
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../../responsive/screens';
 
 const CarouselContainer = styled.div`
 	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px]`}
@@ -43,8 +45,9 @@ const NowPlayingContainer = styled.div`
 `;
 
 export default function MovieCarousel({ movies }) {
-	const top10Movies = movies.slice(0, 10);
-	const { setCurrentMovie } = useContext(MoviesContext);
+	const { setCurrentSelection } = useContext(MoviesContext);
+
+	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
 	const navigate = useNavigate();
 
@@ -55,24 +58,24 @@ export default function MovieCarousel({ movies }) {
 			</NowPlayingContainer>
 			<CarouselContainer>
 				<StyledSwiper
-					cssMode={true}
-					slidesPerView={1}
+					slidesPerView={isMobile ? 1 : 3}
 					spaceBetween={20}
 					loop={true}
 					navigation={true}
 					autoplay={{
-						delay: 5500,
-						disableOnInteraction: true,
+						delay: 3000,
 						pauseOnMouseEnter: true,
+						disableOnInteraction: false,
 					}}
 					modules={[Navigation, Autoplay]}
 					className="mySwiper"
 				>
-					{top10Movies.map((movie) => (
+					{movies.map((movie) => (
 						<SwiperSlide
+							className="cursor-pointer"
 							key={movie.id}
 							onClick={() => {
-								setCurrentMovie(movie);
+								setCurrentSelection(movie);
 								navigate(
 									`/${movie.media_type ? movie.media_type : 'media'}/${
 										movie.id
@@ -80,24 +83,15 @@ export default function MovieCarousel({ movies }) {
 								);
 							}}
 						>
-							{/* <TitleContainer>
-								<MovieTitle>{movie.title}</MovieTitle>
-							</TitleContainer> */}
-
-							{/* <RatingContainer>
-								<Rating>
-									{Number.isInteger(movie.vote_average)
-										? `${movie.vote_average}.0`
-										: movie.vote_average}
-								</Rating>
-							</RatingContainer> */}
-							<ImageOverlay />
-							<MovieTitleContainer>
+							<ImageOverlay className={isMobile ? null : 'hidden'} />
+							<MovieTitleContainer className={isMobile ? null : 'hidden'}>
 								<MovieTitle>{movie.title}</MovieTitle>
 							</MovieTitleContainer>
 
 							<MovieImage
-								src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+								src={`https://image.tmdb.org/t/p/original/${
+									isMobile ? movie.backdrop_path : movie.poster_path
+								}`}
 								alt="movie-img"
 							/>
 						</SwiperSlide>

@@ -11,6 +11,7 @@ const ListContainer = styled.ul`
 	${tw`
         flex
         list-none
+		pr-4
     `}
 `;
 

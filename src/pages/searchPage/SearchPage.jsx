@@ -1,15 +1,15 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
-import { MoviesContext } from '../contexts/moviesContext';
+import { MoviesContext } from '../../contexts/moviesContext';
 import tw from 'twin.macro';
 import styled from 'styled-components';
-import { NavBar } from '../components/navbar';
+import { NavBar } from '../../components/navbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
 	PageContainer,
 	MovieRow,
 	MoviePoster,
-} from '../components/globalComponents';
+} from '../../components/globalComponents';
 
 const SearchForm = styled.form`
 	${tw`w-full h-40 flex flex-col items-center justify-center p-5`}

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { NavBar } from '../../components/navbar';
 import MovieCarousel from './MovieCarousel';
-import MovieSection from '../../components/movieSection';
+import MovieSection from '../../components/MovieSection';
 import { MoviesContext } from '../../contexts/moviesContext';
 import { PageContainer } from '../../components/globalComponents';
 
@@ -21,6 +21,10 @@ export default function HomePage() {
 				sectionTitle="Trending This Week"
 			/>
 			<MovieSection
+				movies={movieData.upcomingMovies}
+				sectionTitle="Upcoming Releases"
+			/>
+			<MovieSection
 				movies={movieData.originals}
 				sectionTitle="Original TV Shows"
 			/>
@@ -31,10 +35,6 @@ export default function HomePage() {
 			<MovieSection
 				movies={movieData.topRatedMovies}
 				sectionTitle="Top Rated Movies"
-			/>
-			<MovieSection
-				movies={movieData.upcomingMovies}
-				sectionTitle="Upcoming Releases"
 			/>
 		</PageContainer>
 	);

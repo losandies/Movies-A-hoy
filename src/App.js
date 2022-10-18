@@ -7,7 +7,7 @@ import tw from 'twin.macro';
 import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
-import SearchPage from './pages/SearchPage';
+import SearchPage from './pages/searchPage/SearchPage';
 
 const AppContainer = styled.div`
 	${tw`w-full h-full flex flex-col`}
