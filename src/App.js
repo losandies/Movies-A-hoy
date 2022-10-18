@@ -4,7 +4,7 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/SearchPage';
@@ -73,12 +73,9 @@ function App() {
 			>
 				<AppContainer>
 					<Routes>
-						<Route path="/Movies-A-hoy" element={<HomePage />} />
-						<Route
-							path="/Movies-A-hoy/:mediaType/:id"
-							element={<DescriptionPage />}
-						/>
-						<Route path="/Movies-A-hoy/search" element={<SearchPage />} />
+						<Route path="/" element={<HomePage />} />
+						<Route path="/:mediaType/:id" element={<DescriptionPage />} />
+						<Route path="/search" element={<SearchPage />} />
 					</Routes>
 				</AppContainer>
 			</MoviesContext.Provider>
