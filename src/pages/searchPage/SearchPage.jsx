@@ -22,7 +22,7 @@ const ResultsContainer = styled(MovieRow)`
 `;
 
 const SearchPage = () => {
-	const { setCurrentMovie, setCurrentPage } = useContext(MoviesContext);
+	const { setCurrentSelection, setCurrentPage } = useContext(MoviesContext);
 
 	const [searchInput, setSearchInput] = useState('');
 	const [searchResults, setSearchResults] = useState([]);
@@ -62,7 +62,7 @@ const SearchPage = () => {
 						src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
 						alt={movie.title}
 						onClick={() => {
-							setCurrentMovie(movie);
+							setCurrentSelection(movie);
 							navigate(
 								`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
 							);
