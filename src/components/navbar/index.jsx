@@ -9,22 +9,11 @@ import { HiSearch } from 'react-icons/hi';
 
 const NavContainer = styled.div`
 	min-height: 68px;
-	${tw`
-        w-full
-        max-w-screen-2xl
-        flex
-        flex-row
-        items-center
-        lg:pl-12
-        lg:pr-12
-        justify-between
-    `}
+	${tw`w-full max-w-screen-2xl flex flex-row items-center md:px-4 justify-between mb-[25px]`}
 `;
-
 const LogoContainer = styled.div`
 	${tw`flex items-center ml-3 md:mx-8`};
 `;
-
 const LogoLettering = styled.h3`
 	font-family: 'Poppins';
 	${tw`text-lg md:text-3xl font-semibold tracking-tighter text-white`};

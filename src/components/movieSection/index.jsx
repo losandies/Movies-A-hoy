@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { MoviesContext } from '../../contexts/moviesContext';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { Link, useLocation } from 'wouter';
 import { MovieRow } from '../globalComponents';
 import { MoviePoster } from '../globalComponents';
 import { useNavigate } from 'react-router-dom';
@@ -17,14 +16,12 @@ const SectionTitle = styled.h2`
 `;
 
 export default function MovieSection({ movies, sectionTitle }) {
-	// const [currentMovie, setCurrentMovie] = useState({});
-
-	const { setCurrentMovie, currentMovie } = useContext(MoviesContext);
+	const { setCurrentSelection, currentSelection } = useContext(MoviesContext);
 	const navigate = useNavigate();
 
 	return (
 		<SectionContainer>
-			<SectionTitle onClick={() => console.log(currentMovie)}>
+			<SectionTitle onClick={() => console.log(currentSelection)}>
 				{sectionTitle}
 			</SectionTitle>
 			<MovieRow>
@@ -34,7 +31,7 @@ export default function MovieSection({ movies, sectionTitle }) {
 						src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
 						alt={movie.title}
 						onClick={() => {
-							setCurrentMovie(movie);
+							setCurrentSelection(movie);
 							navigate(
 								`/${movie.media_type ? movie.media_type : 'media'}/${movie.id}`
 							);

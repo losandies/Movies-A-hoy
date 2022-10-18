@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { NavBar } from '../../components/navbar';
-import MovieCarousel from '../../components/movieCarousel';
+import MovieCarousel from './MovieCarousel';
 import MovieSection from '../../components/movieSection';
 import { MoviesContext } from '../../contexts/moviesContext';
-import axios from 'axios';
 import { PageContainer } from '../../components/globalComponents';
 
 export default function HomePage() {

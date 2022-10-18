@@ -12,30 +12,26 @@ import { MdArrowBackIosNew } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import DescriptionOverlay from '../../components/descriptionOverlay';
+import DescriptionOverlay from './DescriptionOverlay';
 
 const MovieHeroImage = styled.img`
-	width: 100%;
-	height: 320px;
 	object-fit: cover;
 	object-position: 50% 50%;
 
-	${tw``}
+	${tw`w-full h-[320px] md:h-[500px]`}
 `;
 const ImageContainer = styled.div`
-	${tw`w-full h-[320px] relative`}
+	${tw`w-full h-[320px] md:h-[500px] relative`}
 `;
 
 const ImageOverlay = styled.div`
 	background: linear-gradient(rgba(0, 130, 170, 0), #000000);
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 320px;
+
+	${tw`absolute top-0 w-full h-[320px] md:h-[500px]`}
 `;
 
 const MovieTitleContainer = styled.div`
-	${tw`absolute z-10 w-[80%] p-4`}
+	${tw`absolute md:top-[430px] z-10 w-[80%] p-4`}
 `;
 
 const MovieTitle = styled.h2`
@@ -75,33 +71,34 @@ const RecommendationTitle = styled.h3`
 `;
 
 const DescriptionPage = () => {
-	const { currentMovie, setCurrentMovie, currentPage } =
+	const { currentSelection, setCurrentSelection, currentPage } =
 		useContext(MoviesContext);
 	const [genres, setGenres] = useState([]);
 	const [recommendations, setRecommendations] = useState([]);
 	const [descriptionIsClicked, setDescriptionIsClicked] = useState(false);
+
 	const navigate = useNavigate();
 
 	const getMovieGenresAndRecommendations = async () => {
 		const genreList = [];
 		let getMovieById = await axios.get(
-			`https://api.themoviedb.org/3/find/${currentMovie.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
+			`https://api.themoviedb.org/3/find/${currentSelection.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
 		);
 
 		const movieData = getMovieById.data;
 		console.log(movieData);
 
 		// Check if movie or TV show
-		const isTVShow = currentMovie.first_air_date;
+		const isTVShow = currentSelection.first_air_date;
 
 		let genres = await axios.get(
 			`https://api.themoviedb.org/3/${isTVShow ? 'tv' : 'movie'}/${
-				currentMovie.id
+				currentSelection.id
 			}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}`
 		);
 		let recommendations = await axios.get(
 			`https://api.themoviedb.org/3/${isTVShow ? 'tv' : 'movie'}/${
-				currentMovie.id
+				currentSelection.id
 			}/recommendations?api_key=${
 				process.env.REACT_APP_MOVIEDB_API_KEY
 			}&language=en-US&page=1`
@@ -118,8 +115,8 @@ const DescriptionPage = () => {
 	};
 
 	// Some objects have 'name' properties some have 'titles' instead
-	const mediaTitle = currentMovie.title;
-	const mediaName = currentMovie.name;
+	const mediaTitle = currentSelection.title;
+	const mediaName = currentSelection.name;
 
 	const closeDescriptionOverlay = () => {
 		setDescriptionIsClicked(false);
@@ -127,13 +124,13 @@ const DescriptionPage = () => {
 
 	useEffect(() => {
 		getMovieGenresAndRecommendations();
-	}, [currentMovie]);
+	}, [currentSelection, recommendations]);
 
 	return (
 		<>
 			{descriptionIsClicked ? (
 				<DescriptionOverlay
-					description={currentMovie.overview}
+					description={currentSelection.overview}
 					closeDescriptionOverlay={closeDescriptionOverlay}
 				/>
 			) : null}
@@ -165,13 +162,13 @@ const DescriptionPage = () => {
 					</MovieTitleContainer>
 					<ImageOverlay />
 					<MovieHeroImage
-						src={`https://image.tmdb.org/t/p/original/${currentMovie.backdrop_path}`}
-						alt={currentMovie.name}
+						src={`https://image.tmdb.org/t/p/original/${currentSelection.backdrop_path}`}
+						alt={currentSelection.name}
 					/>
 				</ImageContainer>
 
 				<MovieOverviewContainer onClick={() => setDescriptionIsClicked(true)}>
-					<MovieOverview>{currentMovie.overview}</MovieOverview>
+					<MovieOverview>{currentSelection.overview}</MovieOverview>
 				</MovieOverviewContainer>
 				<GenreContainer>
 					{genres.map((genre) => (
@@ -188,7 +185,7 @@ const DescriptionPage = () => {
 							src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
 							alt={movie.title}
 							onClick={() => {
-								setCurrentMovie(movie);
+								setCurrentSelection(movie);
 								navigate(
 									`/${movie.media_type ? movie.media_type : 'media'}/${
 										movie.id
