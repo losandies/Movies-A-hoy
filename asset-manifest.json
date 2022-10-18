@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Movies-A-hoy/static/css/main.a8d0ba05.css",
-    "main.js": "/Movies-A-hoy/static/js/main.88aea414.js",
+    "main.css": "/Movies-A-hoy/static/css/main.346f5f8a.css",
+    "main.js": "/Movies-A-hoy/static/js/main.f890c6ec.js",
     "index.html": "/Movies-A-hoy/index.html",
-    "main.a8d0ba05.css.map": "/Movies-A-hoy/static/css/main.a8d0ba05.css.map",
-    "main.88aea414.js.map": "/Movies-A-hoy/static/js/main.88aea414.js.map"
+    "main.346f5f8a.css.map": "/Movies-A-hoy/static/css/main.346f5f8a.css.map",
+    "main.f890c6ec.js.map": "/Movies-A-hoy/static/js/main.f890c6ec.js.map"
   },
   "entrypoints": [
-    "static/css/main.a8d0ba05.css",
-    "static/js/main.88aea414.js"
+    "static/css/main.346f5f8a.css",
+    "static/js/main.f890c6ec.js"
   ]
 }
