@@ -27,18 +27,21 @@ const NavItem = styled.li`
 export function NavItems() {
 	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
-	isMobile ? (
-		<Menu styles={menuStyles}>
-			<ListContainer>
-				<NavItem menu>
-					<Link to="/">Home</Link>
-				</NavItem>
-				<NavItem menu>
-					<Link to="/search">Search</Link>
-				</NavItem>
-			</ListContainer>
-		</Menu>
-	) : (
+	if (isMobile)
+		return (
+			<Menu styles={menuStyles}>
+				<ListContainer>
+					<NavItem menu>
+						<Link to="/">Home</Link>
+					</NavItem>
+					<NavItem menu>
+						<Link to="/search">Search</Link>
+					</NavItem>
+				</ListContainer>
+			</Menu>
+		);
+
+	return (
 		<ListContainer>
 			<NavItem>
 				<Link to="/">Home</Link>
