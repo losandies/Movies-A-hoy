@@ -8,6 +8,8 @@ import { HashRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
+import RegisterPage from './pages/RegisterPage';
+import LoginPage from './pages/LoginPage';
 
 const AppContainer = styled.div`
 	${tw`w-full h-full flex flex-col`}
@@ -74,6 +76,8 @@ function App() {
 				<AppContainer>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
+						<Route path="/register" element={<RegisterPage />} />
+						<Route path="/login" element={<LoginPage />} />
 						<Route path="/:mediaType/:id" element={<DescriptionPage />} />
 						<Route path="/search" element={<SearchPage />} />
 					</Routes>

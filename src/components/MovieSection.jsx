@@ -8,7 +8,7 @@ import { MoviePoster } from './globalComponents';
 import { useNavigate } from 'react-router-dom';
 
 const SectionContainer = styled.div`
-	${tw`mt-8`}
+	${tw`mt-8 md:mx-2`}
 `;
 
 const SectionTitle = styled.h2`

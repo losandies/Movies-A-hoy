@@ -14,7 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
 
 const CarouselContainer = styled.div`
-	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px]`}
+	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px] mt-8`}
 `;
 const StyledSwiper = styled(Swiper)`
 	${tw`w-[95%] h-full rounded-md`}
