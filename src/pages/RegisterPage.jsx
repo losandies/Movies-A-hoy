@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { PageContainer } from '../components/globalComponents';
@@ -9,11 +10,15 @@ const RegisterPageContainer = styled(PageContainer)`
 `;
 
 const RegisterForm = styled.form`
-	${tw`w-[95%] flex flex-col justify-center items-center h-1/2 p-4 mt-6`}
+	${tw`w-[80%] flex flex-col justify-center items-center`}
 `;
 
 const InputContainer = styled.div`
-	${tw`w-full h-16 flex justify-around`}
+	${tw`w-full h-16 flex justify-around items-center`}
+`;
+
+const ButtonContainer = styled.div`
+	${tw`w-full h-32 flex-col flex items-center`}
 `;
 
 const ShortInput = styled.input`
@@ -31,7 +36,7 @@ const LabelContainer = styled.div`
 	${tw`w-[40%] h-9 flex items-center`}
 `;
 const LabelText = styled.h3`
-	${tw`text-lg text-white`}
+	${tw` ml-1 text-base text-white`}
 `;
 
 const RegisterText = styled.h2`
@@ -39,11 +44,15 @@ const RegisterText = styled.h2`
 `;
 
 const RegisterButton = styled.button`
-	${tw`w-[50%] h-12 mt-8 bg-blue-800 text-xl text-white`}
+	${tw`w-[95%] h-12 bg-blue-800 text-xl text-white mb-4`}
+`;
+
+const AlternateText = styled.p`
+	${tw`text-white text-xs`}
 `;
 
 const Separator = styled.div`
-	${tw`w-full bg-gray-800 h-[1px]`}
+	${tw`w-full bg-gray-800 h-[1px] my-6`}
 `;
 
 const RegisterPage = () => {
@@ -69,6 +78,7 @@ const RegisterPage = () => {
 			<NavBar />
 			<RegisterText>Register Here</RegisterText>
 			<RegisterForm>
+				<Separator />
 				<InputContainer>
 					<ShortInput
 						type="text"
@@ -131,11 +141,17 @@ const RegisterPage = () => {
 					</Select>
 				</InputContainer>
 				<Separator />
-				<InputContainer>
+				<ButtonContainer>
 					<RegisterButton onClick={() => console.log(userInfo)}>
 						Register
 					</RegisterButton>
-				</InputContainer>
+					<AlternateText>
+						Have an account already? Log in{' '}
+						<Link to="/login" className="underline">
+							here
+						</Link>
+					</AlternateText>
+				</ButtonContainer>
 			</RegisterForm>
 		</RegisterPageContainer>
 	);

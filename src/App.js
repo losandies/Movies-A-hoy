@@ -4,7 +4,7 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { HashRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
