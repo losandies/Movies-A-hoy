@@ -14,7 +14,7 @@ import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
 
 const CarouselContainer = styled.div`
-	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px] mt-8`}
+	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px]`}
 `;
 const StyledSwiper = styled(Swiper)`
 	${tw`w-[95%] h-full rounded-md`}
@@ -41,7 +41,7 @@ const NowPlayingText = styled.h3`
 	${tw`text-base md:text-2xl text-white font-bold uppercase mx-4`}
 `;
 const NowPlayingContainer = styled.div`
-	${tw`w-full h-10 mb-4 md:p-4`}
+	${tw`w-full h-10 mb-4 md:mb-8 md:ml-2 md:p-4`}
 `;
 
 export default function MovieCarousel({ movies }) {

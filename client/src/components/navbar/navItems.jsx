@@ -33,7 +33,7 @@ export function NavItems() {
 			<Menu styles={menuStyles}>
 				<ListContainer>
 					<NavItem menu>
-						<Link to="/">Home</Link>
+						<Link to="/home">Home</Link>
 					</NavItem>
 					<NavItem menu>
 						<Link to="/search">Search</Link>
@@ -45,7 +45,7 @@ export function NavItems() {
 	return (
 		<ListContainer>
 			<NavItem>
-				<Link to="/">Home</Link>
+				<Link to="/home">Home</Link>
 			</NavItem>
 			<NavItem>
 				<Link to="/search">Search</Link>

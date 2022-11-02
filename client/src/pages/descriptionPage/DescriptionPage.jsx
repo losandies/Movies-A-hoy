@@ -124,6 +124,7 @@ const DescriptionPage = () => {
 
 	useEffect(() => {
 		getMovieGenresAndRecommendations();
+		console.log(currentSelection);
 	}, [currentSelection, recommendations]);
 
 	return (

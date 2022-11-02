@@ -27,7 +27,7 @@ export function NavBar() {
 			<NavContainer>
 				<NavItems />
 				<LogoContainer>
-					<Link to="/">
+					<Link to="/home">
 						<LogoLettering>Movies A'hoy</LogoLettering>
 					</Link>
 				</LogoContainer>
@@ -42,7 +42,7 @@ export function NavBar() {
 	return (
 		<NavContainer>
 			<LogoContainer>
-				<Link to="/">
+				<Link to="/home">
 					<LogoLettering>Movies A'hoy</LogoLettering>
 				</Link>
 			</LogoContainer>

@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/Movies-A-hoy/static/css/main.346f5f8a.css",
+    "main.js": "/Movies-A-hoy/static/js/main.6ff94712.js",
+    "index.html": "/Movies-A-hoy/index.html",
+    "main.346f5f8a.css.map": "/Movies-A-hoy/static/css/main.346f5f8a.css.map",
+    "main.6ff94712.js.map": "/Movies-A-hoy/static/js/main.6ff94712.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.346f5f8a.css",
+    "static/js/main.6ff94712.js"
+  ]
+}

@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import './App.css';
-import HomePage from './pages/homepage/HomePage';
-import styled from 'styled-components';
-import tw from 'twin.macro';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DescriptionPage from './pages/descriptionPage/DescriptionPage';
-import { MoviesContext } from './contexts/moviesContext';
-import SearchPage from './pages/searchPage/SearchPage';
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
+import { NavBar } from '../../components/navbar';
+import MovieCarousel from './MovieCarousel';
+import MovieSection from '../../components/MovieSection';
+import { MoviesContext } from '../../contexts/moviesContext';
+import { PageContainer } from '../../components/globalComponents';
+import { UserContext } from '../../contexts/userContext';
+import { useNavigate } from 'react-router-dom';
 
-const AppContainer = styled.div`
-	${tw`w-full h-full flex flex-col`}
-`;
-
-function App() {
-	const [currentSelection, setCurrentSelection] = useState({});
-	const [currentPage, setCurrentPage] = useState('home');
+export default function HomePage() {
+	const { user } = useContext(UserContext);
+	const { setCurrentPage } = useContext(MoviesContext);
+	const navigate = useNavigate();
 
 	const [movieData, setMovieData] = useState({
 		nowPlayingMovies: [],
@@ -62,29 +56,38 @@ function App() {
 		fetchMovieData();
 	}, [movieData]);
 
+	useEffect(() => {
+		// if (!user) {
+		// 	navigate('/login');
+		// 	return;
+		// }
+		setCurrentPage('home');
+	});
+
 	return (
-		<Router>
-			<MoviesContext.Provider
-				value={{
-					movieData,
-					currentSelection,
-					setCurrentSelection,
-					currentPage,
-					setCurrentPage,
-				}}
-			>
-				<AppContainer>
-					<Routes>
-						<Route path="/" element={<HomePage />} />
-						<Route path="/register" element={<RegisterPage />} />
-						<Route path="/login" element={<LoginPage />} />
-						<Route path="/:mediaType/:id" element={<DescriptionPage />} />
-						<Route path="/search" element={<SearchPage />} />
-					</Routes>
-				</AppContainer>
-			</MoviesContext.Provider>
-		</Router>
+		<PageContainer>
+			<NavBar />
+			<MovieCarousel movies={movieData.nowPlayingMovies} />
+			<MovieSection
+				movies={movieData.trending}
+				sectionTitle="Trending This Week"
+			/>
+			<MovieSection
+				movies={movieData.upcomingMovies}
+				sectionTitle="Upcoming Releases"
+			/>
+			<MovieSection
+				movies={movieData.originals}
+				sectionTitle="Original TV Shows"
+			/>
+			<MovieSection
+				movies={movieData.popularMovies}
+				sectionTitle="Popular Movies"
+			/>
+			<MovieSection
+				movies={movieData.topRatedMovies}
+				sectionTitle="Top Rated Movies"
+			/>
+		</PageContainer>
 	);
 }
-
-export default App;

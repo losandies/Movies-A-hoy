@@ -17,7 +17,7 @@ export const PageContainer = styled.div`
 `;
 
 export const MovieRow = styled.div`
-	${tw`flex overflow-x-auto p-2 md:mt-4 md:p-4`}
+	${tw`flex overflow-x-auto p-2 md:px-4`}
 
 	&::-webkit-scrollbar {
 		display: none;
