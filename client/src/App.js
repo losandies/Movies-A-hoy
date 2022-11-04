@@ -4,13 +4,19 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	Navigate,
+} from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { UserContext } from './contexts/userContext';
+import PrivateRoute from './components/PrivateRoute';
 
 const AppContainer = styled.div`
 	${tw`w-full h-full flex flex-col`}
@@ -19,10 +25,28 @@ const AppContainer = styled.div`
 function App() {
 	const [currentSelection, setCurrentSelection] = useState({});
 	const [currentPage, setCurrentPage] = useState('home');
-	const [user, setUser] = useState(null);
+	const [isAuthorized, setIsAuthorized] = useState(false);
+	const [user, setUser] = useState({});
+
+	const checkAuthenticated = async () => {
+		console.log('running function');
+
+		const res = await axios.post('http://localhost:9000/auth/verify', {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`,
+			},
+		});
+		res.data === true ? setIsAuthorized(true) : setIsAuthorized(false);
+	};
+
+	useEffect(() => {
+		checkAuthenticated();
+	}, []);
 
 	return (
-		<UserContext.Provider value={{ user, setUser }}>
+		<UserContext.Provider
+			value={{ setIsAuthorized, isAuthorized, user, setUser }}
+		>
 			<MoviesContext.Provider
 				value={{
 					currentSelection,
@@ -34,11 +58,17 @@ function App() {
 				<AppContainer>
 					<Router>
 						<Routes>
-							<Route path="/home" element={<HomePage />} />
 							<Route path="/register" element={<RegisterPage />} />
 							<Route path="/login" element={<LoginPage />} />
-							<Route path="/:mediaType/:id" element={<DescriptionPage />} />
-							<Route path="/search" element={<SearchPage />} />
+							<Route path="/home" element={<PrivateRoute />}>
+								<Route path="/home" element={<HomePage />} />
+							</Route>
+							<Route path="/:mediaType/:id" element={<PrivateRoute />}>
+								<Route path="/:mediaType/:id" element={<DescriptionPage />} />
+							</Route>
+							<Route path="/search" element={<PrivateRoute />}>
+								<Route path="/search" element={<HomePage />} />
+							</Route>
 						</Routes>
 					</Router>
 				</AppContainer>

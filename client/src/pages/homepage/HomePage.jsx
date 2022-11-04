@@ -9,12 +9,13 @@ import { UserContext } from '../../contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 	const { setCurrentPage } = useContext(MoviesContext);
 	const navigate = useNavigate();
 
 	const [movieData, setMovieData] = useState({
 		nowPlayingMovies: [],
+		forYouMovies: [],
 		popularMovies: [],
 		topRatedMovies: [],
 		upcomingMovies: [],
@@ -54,7 +55,8 @@ export default function HomePage() {
 
 	useEffect(() => {
 		fetchMovieData();
-	}, [movieData]);
+		console.log(localStorage.getItem('token'));
+	}, []);
 
 	useEffect(() => {
 		// if (!user) {

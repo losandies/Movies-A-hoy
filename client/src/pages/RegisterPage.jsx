@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { PageContainer } from '../components/globalComponents';
@@ -58,7 +58,8 @@ const RegisterPage = () => {
 		favorite_genre: null,
 	});
 
-	const { user, setUser } = useContext(UserContext);
+	const { setIsAuthorized } = useContext(UserContext);
+	const navigate = useNavigate();
 
 	const { firstName, lastName, email, password, favorite_genre } = userInfo;
 
@@ -72,13 +73,19 @@ const RegisterPage = () => {
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		const res = await axios.post(
-			'http://localhost:9000/auth/register',
-			userInfo
-		);
+		try {
+			const res = await axios.post(
+				'http://localhost:9000/auth/register',
+				userInfo
+			);
 
-		if (res.data) {
-			console.log(res.data);
+			if (res.data.token) {
+				localStorage.setItem('token', res.data.token);
+				setIsAuthorized(true);
+				navigate('/home');
+			}
+		} catch (err) {
+			console.log(err.message);
 		}
 	};
 
@@ -131,7 +138,7 @@ const RegisterPage = () => {
 						value={favorite_genre}
 						onChange={onChange}
 					>
-						<option value="" disabled selected hidden>
+						<option value="" disabled hidden>
 							Select
 						</option>
 						<option value={35}>Comedy</option>

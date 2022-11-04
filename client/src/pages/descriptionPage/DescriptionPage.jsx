@@ -85,9 +85,6 @@ const DescriptionPage = () => {
 			`https://api.themoviedb.org/3/find/${currentSelection.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
 		);
 
-		const movieData = getMovieById.data;
-		console.log(movieData);
-
 		// Check if movie or TV show
 		const isTVShow = currentSelection.first_air_date;
 
@@ -124,7 +121,6 @@ const DescriptionPage = () => {
 
 	useEffect(() => {
 		getMovieGenresAndRecommendations();
-		console.log(currentSelection);
 	}, [currentSelection, recommendations]);
 
 	return (
@@ -141,7 +137,7 @@ const DescriptionPage = () => {
 						<Link
 							to={
 								currentPage === 'home'
-									? '/'
+									? '/home'
 									: currentPage === 'search'
 									? '/search'
 									: null

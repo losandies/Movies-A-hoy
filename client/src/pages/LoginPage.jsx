@@ -42,8 +42,7 @@ const LoginPage = () => {
 	});
 
 	const { email, password } = userInfo;
-
-	const { user, setUser } = useContext(UserContext);
+	const { isAuthorized, setIsAuthorized } = useContext(UserContext);
 
 	const navigate = useNavigate();
 
@@ -54,16 +53,34 @@ const LoginPage = () => {
 		});
 	};
 
-	const logInUser = () => {
-		setUser(userInfo);
-		navigate('/home');
+	const onSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			const res = await axios.post(
+				'http://localhost:9000/auth/login',
+				userInfo
+			);
+
+			if (res.data.token) {
+				localStorage.setItem('token', res.data.token);
+				setIsAuthorized(true);
+				navigate('/home');
+			}
+		} catch (err) {
+			console.log(err.message);
+		}
 	};
+
+	if (isAuthorized) {
+		navigate('/home');
+	}
 
 	return (
 		<LoginPageContainer>
 			<NavBar />
 			<LoginText>Sign In Here</LoginText>
-			<LoginForm onSubmit={logInUser}>
+			<LoginForm onSubmit={onSubmit}>
 				<Separator />
 				<InputContainer>
 					<LongInput
@@ -85,7 +102,7 @@ const LoginPage = () => {
 				</InputContainer>
 				<Separator />
 				<ButtonContainer>
-					<LoginButton type="submit">Sign In</LoginButton>
+					<LoginButton>Sign In</LoginButton>
 					<AlternateText>
 						Don't have an account yet? Sign up{' '}
 						<Link to="/register" className="underline">
