@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -58,7 +58,7 @@ const RegisterPage = () => {
 		favorite_genre: null,
 	});
 
-	const { setIsAuthorized } = useContext(UserContext);
+	const { isAuthorized } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const { firstName, lastName, email, password, favorite_genre } = userInfo;
@@ -81,12 +81,18 @@ const RegisterPage = () => {
 
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
-				navigate('/home');
+				navigate('/');
 			}
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
+
+	useEffect(() => {
+		if (isAuthorized) {
+			navigate('/');
+		}
+	});
 
 	return (
 		<RegisterPageContainer>

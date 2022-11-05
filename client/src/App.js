@@ -4,12 +4,7 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	Navigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
@@ -37,14 +32,12 @@ function App() {
 			});
 			if (res.data === true) setIsAuthorized(true);
 		} catch (error) {
-			console.log(error);
 			setIsAuthorized(false);
 		}
 	};
 
 	useEffect(() => {
 		checkAuthenticated();
-		console.log(isAuthorized);
 	}, []);
 
 	return (
@@ -53,8 +46,6 @@ function App() {
 				setIsAuthorized,
 				isAuthorized,
 				checkAuthenticated,
-				user,
-				setUser,
 			}}
 		>
 			<MoviesContext.Provider
@@ -70,8 +61,8 @@ function App() {
 						<Routes>
 							<Route path="/register" element={<RegisterPage />} />
 							<Route path="/login" element={<LoginPage />} />
-							<Route path="/home" element={<PrivateRoute />}>
-								<Route path="/home" element={<HomePage />} />
+							<Route path="/" element={<PrivateRoute />}>
+								<Route path="/" element={<HomePage />} />
 							</Route>
 							<Route path="/:mediaType/:id" element={<PrivateRoute />}>
 								<Route path="/:mediaType/:id" element={<DescriptionPage />} />

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
@@ -64,16 +64,18 @@ const LoginPage = () => {
 
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
-				navigate('/home');
+				navigate('/');
 			}
 		} catch (err) {
 			console.log(err.message);
 		}
 	};
 
-	if (isAuthorized) {
-		navigate('/home');
-	}
+	useEffect(() => {
+		if (isAuthorized) {
+			navigate('/');
+		}
+	});
 
 	return (
 		<LoginPageContainer>

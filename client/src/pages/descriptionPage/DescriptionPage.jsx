@@ -9,6 +9,8 @@ import { MoviesContext } from '../../contexts/moviesContext';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import { MdArrowBackIosNew } from 'react-icons/md';
+import { RiHeart3Fill } from 'react-icons/ri';
+import { RiHeart3Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -31,11 +33,15 @@ const ImageOverlay = styled.div`
 `;
 
 const MovieTitleContainer = styled.div`
-	${tw`absolute md:top-[430px] z-10 w-[80%] p-4`}
+	${tw`absolute md:top-[430px] flex justify-between items-center z-10 w-full p-4`}
 `;
 
 const MovieTitle = styled.h2`
 	${tw`text-white text-2xl font-semibold`}
+`;
+
+const LikeIcon = styled.span`
+	${tw`text-3xl text-white`}
 `;
 
 const MovieOverviewContainer = styled.div`
@@ -75,6 +81,7 @@ const DescriptionPage = () => {
 		useContext(MoviesContext);
 	const [genres, setGenres] = useState([]);
 	const [recommendations, setRecommendations] = useState([]);
+	const [isLiked, setIsLiked] = useState(false);
 	const [descriptionIsClicked, setDescriptionIsClicked] = useState(false);
 
 	const navigate = useNavigate();
@@ -149,13 +156,20 @@ const DescriptionPage = () => {
 					<MovieTitleContainer
 						className={`
 				${
-					(mediaName && mediaName.length > 20) ||
-					(mediaTitle && mediaTitle.length > 20)
+					(mediaName && mediaName.length > 25) ||
+					(mediaTitle && mediaTitle.length > 25)
 						? 'top-56'
 						: 'top-64'
 				}`}
 					>
 						<MovieTitle>{mediaName || mediaTitle}</MovieTitle>
+						<LikeIcon onClick={() => setIsLiked(!isLiked)}>
+							{isLiked ? (
+								<RiHeart3Fill className="text-red-500" />
+							) : (
+								<RiHeart3Line />
+							)}
+						</LikeIcon>
 					</MovieTitleContainer>
 					<ImageOverlay />
 					<MovieHeroImage
@@ -164,8 +178,10 @@ const DescriptionPage = () => {
 					/>
 				</ImageContainer>
 
-				<MovieOverviewContainer onClick={() => setDescriptionIsClicked(true)}>
-					<MovieOverview>{currentSelection.overview}</MovieOverview>
+				<MovieOverviewContainer>
+					<MovieOverview onClick={() => setDescriptionIsClicked(true)}>
+						{currentSelection.overview}
+					</MovieOverview>
 				</MovieOverviewContainer>
 				<GenreContainer>
 					{genres.map((genre) => (

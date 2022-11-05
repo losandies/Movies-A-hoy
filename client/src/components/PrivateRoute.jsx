@@ -7,7 +7,6 @@ const PrivateRoute = () => {
 
 	useEffect(() => {
 		checkAuthenticated();
-		console.log(isAuthorized);
 	});
 
 	return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
