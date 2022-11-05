@@ -9,7 +9,7 @@ import { UserContext } from '../../contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
-	const { user, setUser } = useContext(UserContext);
+	const { checkAuthenticated, isAuthorized } = useContext(UserContext);
 	const { setCurrentPage } = useContext(MoviesContext);
 	const navigate = useNavigate();
 
@@ -55,16 +55,9 @@ export default function HomePage() {
 
 	useEffect(() => {
 		fetchMovieData();
-		console.log(localStorage.getItem('token'));
-	}, []);
 
-	useEffect(() => {
-		// if (!user) {
-		// 	navigate('/login');
-		// 	return;
-		// }
 		setCurrentPage('home');
-	});
+	}, []);
 
 	return (
 		<PageContainer>

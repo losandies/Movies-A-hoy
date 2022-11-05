@@ -29,23 +29,33 @@ function App() {
 	const [user, setUser] = useState({});
 
 	const checkAuthenticated = async () => {
-		console.log('running function');
-
-		const res = await axios.post('http://localhost:9000/auth/verify', {
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('token')}`,
-			},
-		});
-		res.data === true ? setIsAuthorized(true) : setIsAuthorized(false);
+		try {
+			const res = await axios.get('http://localhost:9000/auth/verify', {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('token')}`,
+				},
+			});
+			if (res.data === true) setIsAuthorized(true);
+		} catch (error) {
+			console.log(error);
+			setIsAuthorized(false);
+		}
 	};
 
 	useEffect(() => {
 		checkAuthenticated();
+		console.log(isAuthorized);
 	}, []);
 
 	return (
 		<UserContext.Provider
-			value={{ setIsAuthorized, isAuthorized, user, setUser }}
+			value={{
+				setIsAuthorized,
+				isAuthorized,
+				checkAuthenticated,
+				user,
+				setUser,
+			}}
 		>
 			<MoviesContext.Provider
 				value={{
@@ -67,7 +77,7 @@ function App() {
 								<Route path="/:mediaType/:id" element={<DescriptionPage />} />
 							</Route>
 							<Route path="/search" element={<PrivateRoute />}>
-								<Route path="/search" element={<HomePage />} />
+								<Route path="/search" element={<SearchPage />} />
 							</Route>
 						</Routes>
 					</Router>

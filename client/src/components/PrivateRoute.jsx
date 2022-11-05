@@ -1,9 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { UserContext } from '../contexts/userContext';
 
 const PrivateRoute = () => {
-	const { isAuthorized } = useContext(UserContext);
+	const { checkAuthenticated, isAuthorized } = useContext(UserContext);
+
+	useEffect(() => {
+		checkAuthenticated();
+		console.log(isAuthorized);
+	});
 
 	return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
 };

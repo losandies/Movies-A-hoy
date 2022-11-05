@@ -64,7 +64,6 @@ const LoginPage = () => {
 
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
-				setIsAuthorized(true);
 				navigate('/home');
 			}
 		} catch (err) {
