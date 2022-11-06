@@ -74,6 +74,7 @@ router.get('/verify', authorization, async (req, res) => {
 });
 
 router.get('/me', authorization, async (req, res) => {
+	console.log('hit');
 	try {
 		const user = await db.query(
 			'SELECT name, favorite_genre FROM users WHERE user_id = $1',

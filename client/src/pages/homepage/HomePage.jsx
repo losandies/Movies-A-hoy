@@ -9,11 +9,14 @@ import { UserContext } from '../../contexts/userContext';
 import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
-	const { checkAuthenticated, isAuthorized } = useContext(UserContext);
+	const { checkAuthenticated, isAuthorized, user } = useContext(UserContext);
 	const { setCurrentPage } = useContext(MoviesContext);
 	const navigate = useNavigate();
 
+	const userFirstName = user.name.split(' ')[0];
+
 	const [movieData, setMovieData] = useState({
+		suggestedMovies: [],
 		nowPlayingMovies: [],
 		forYouMovies: [],
 		popularMovies: [],
@@ -24,6 +27,10 @@ export default function HomePage() {
 	});
 
 	const fetchMovieData = async () => {
+		const suggestedForYou = await axios.get(
+			`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&with_genres=${user.favorite_genre}&language=en-US&primary_release_date.gte=2005&primary_release_date.lte=2022-11-01&region=US`
+		);
+
 		const nowPlaying = await axios.get(
 			`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&page=1&region=US`
 		);
@@ -44,6 +51,7 @@ export default function HomePage() {
 		);
 
 		setMovieData({
+			suggestedMovies: suggestedForYou.data.results,
 			nowPlayingMovies: nowPlaying.data.results,
 			popularMovies: popular.data.results,
 			topRatedMovies: topRated.data.results,
@@ -51,11 +59,12 @@ export default function HomePage() {
 			trending: trending.data.results,
 			originals: originals.data.results,
 		});
+
+		console.log(movieData.suggestedMovies);
 	};
 
 	useEffect(() => {
 		fetchMovieData();
-
 		setCurrentPage('home');
 	}, []);
 
@@ -63,6 +72,10 @@ export default function HomePage() {
 		<PageContainer>
 			<NavBar />
 			<MovieCarousel movies={movieData.nowPlayingMovies} />
+			<MovieSection
+				movies={movieData.suggestedMovies}
+				sectionTitle={`Suggested for ${userFirstName}`}
+			></MovieSection>
 			<MovieSection
 				movies={movieData.trending}
 				sectionTitle="Trending This Week"

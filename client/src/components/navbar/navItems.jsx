@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import tw from 'twin.macro';
 import { useMediaQuery } from 'react-responsive';
 import { slide as Menu } from 'react-burger-menu';
 import { SCREENS } from '../../responsive/screens';
 import menuStyles from './menuStyles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/userContext';
 
 const ListContainer = styled.ul`
 	${tw`
@@ -27,16 +28,27 @@ const NavItem = styled.li`
 
 export function NavItems() {
 	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
+	// const { logOut } = useContext(UserContext);
+
+	const navigate = useNavigate();
+
+	const logOut = () => {
+		localStorage.removeItem('token');
+		navigate('/login');
+	};
 
 	if (isMobile)
 		return (
 			<Menu styles={menuStyles}>
 				<ListContainer>
 					<NavItem menu>
-						<Link to="/home">Home</Link>
+						<Link to="/">Home</Link>
 					</NavItem>
 					<NavItem menu>
 						<Link to="/search">Search</Link>
+					</NavItem>
+					<NavItem menu onClick={logOut}>
+						Log Out
 					</NavItem>
 				</ListContainer>
 			</Menu>
@@ -45,11 +57,12 @@ export function NavItems() {
 	return (
 		<ListContainer>
 			<NavItem>
-				<Link to="/home">Home</Link>
+				<Link to="/">Home</Link>
 			</NavItem>
 			<NavItem>
 				<Link to="/search">Search</Link>
 			</NavItem>
+			<NavItem onClick={logOut}>Log Out</NavItem>
 		</ListContainer>
 	);
 }

@@ -144,7 +144,7 @@ const DescriptionPage = () => {
 						<Link
 							to={
 								currentPage === 'home'
-									? '/home'
+									? '/'
 									: currentPage === 'search'
 									? '/search'
 									: null

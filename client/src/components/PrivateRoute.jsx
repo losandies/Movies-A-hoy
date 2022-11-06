@@ -3,11 +3,12 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { UserContext } from '../contexts/userContext';
 
 const PrivateRoute = () => {
-	const { checkAuthenticated, isAuthorized } = useContext(UserContext);
+	const { checkAuthenticated, isAuthorized, checkUserLoggedIn } =
+		useContext(UserContext);
 
 	useEffect(() => {
-		checkAuthenticated();
-	});
+		checkUserLoggedIn();
+	}, []);
 
 	return isAuthorized ? <Outlet /> : <Navigate to="/login" />;
 };

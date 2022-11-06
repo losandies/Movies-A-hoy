@@ -8,8 +8,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
-import RegisterPage from './pages/RegisterPage';
-import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/registerPage/RegisterPage';
+import LoginPage from './pages/loginPage/LoginPage';
 import { UserContext } from './contexts/userContext';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -23,21 +23,41 @@ function App() {
 	const [isAuthorized, setIsAuthorized] = useState(false);
 	const [user, setUser] = useState({});
 
-	const checkAuthenticated = async () => {
+	// const checkAuthenticated = async () => {
+	// 	try {
+	// 		const res = await axios.get('http://localhost:9000/auth/verify', {
+	// 			headers: {
+	// 				Authorization: `Bearer ${localStorage.getItem('token')}`,
+	// 			},
+	// 		});
+	// 		if (res.data === true) setIsAuthorized(true);
+	// 	} catch (error) {
+	// 		setIsAuthorized(false);
+	// 	}
+	// };
+
+	const checkUserLoggedIn = async () => {
 		try {
-			const res = await axios.get('http://localhost:9000/auth/verify', {
+			const res = await axios.get('http://localhost:9000/auth/me', {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 				},
 			});
-			if (res.data === true) setIsAuthorized(true);
-		} catch (error) {
+			if (res) {
+				setUser(res.data);
+				setIsAuthorized(true);
+			}
+		} catch (err) {
 			setIsAuthorized(false);
 		}
 	};
 
+	const logOut = () => {
+		localStorage.removeItem('token');
+	};
+
 	useEffect(() => {
-		checkAuthenticated();
+		checkUserLoggedIn();
 	}, []);
 
 	return (
@@ -45,7 +65,9 @@ function App() {
 			value={{
 				setIsAuthorized,
 				isAuthorized,
-				checkAuthenticated,
+				user,
+				checkUserLoggedIn,
+				logOut,
 			}}
 		>
 			<MoviesContext.Provider

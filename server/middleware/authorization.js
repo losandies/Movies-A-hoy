@@ -9,15 +9,13 @@ module.exports = async (req, res, next) => {
 		try {
 			const token = req.headers.authorization.split(' ')[1];
 
-			console.log(req.headers.authorization);
-
 			if (!token) res.status(403).json({ error: 'Not Authorized' });
 
 			const payload = jwt.verify(token, process.env.jwtSecret);
 			console.log(payload);
 
 			req.user = payload.user;
-			next();
+			return next();
 		} catch (err) {
 			console.error(err.message);
 			res.status(403).json(false);
