@@ -3,8 +3,7 @@ import { Outlet, Navigate } from 'react-router-dom';
 import { UserContext } from '../contexts/userContext';
 
 const PrivateRoute = () => {
-	const { checkAuthenticated, isAuthorized, checkUserLoggedIn } =
-		useContext(UserContext);
+	const { isAuthorized, checkUserLoggedIn } = useContext(UserContext);
 
 	useEffect(() => {
 		checkUserLoggedIn();

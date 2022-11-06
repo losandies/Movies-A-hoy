@@ -2,7 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { MoviesContext } from '../../contexts/moviesContext';
 import tw from 'twin.macro';
 import styled from 'styled-components';
-import { NavBar } from '../../components/navbar';
+import { NavBar } from '../../components/navbar/Navbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -10,15 +10,16 @@ import {
 	MovieRow,
 	MoviePoster,
 } from '../../components/globalComponents';
+import Footer from '../../components/footer/Footer';
 
 const SearchForm = styled.form`
-	${tw`w-full h-40 flex flex-col items-center justify-center p-5`}
+	${tw`w-full h-40 flex flex-col items-center justify-center p-5 md:mt-10`}
 `;
 const SearchBar = styled.input`
-	${tw`bg-white h-16 w-[90%] p-4 rounded-2xl text-lg`}
+	${tw`bg-white h-16 w-[90%] md:w-[60%] p-4 rounded-2xl text-lg`}
 `;
-const ResultsContainer = styled(MovieRow)`
-	${tw`w-full flex-wrap overflow-visible justify-around p-0`}
+const ResultsContainer = styled.div`
+	${tw`w-full sm:w-[90%] flex flex-wrap justify-around overflow-visible md:mt-16 p-0`}
 `;
 
 const SearchPage = () => {
@@ -55,6 +56,7 @@ const SearchPage = () => {
 					onChange={(e) => setSearchInput(e.target.value)}
 				/>
 			</SearchForm>
+
 			<ResultsContainer>
 				{searchResults.map((movie) => (
 					<MoviePoster
@@ -70,6 +72,7 @@ const SearchPage = () => {
 					/>
 				))}
 			</ResultsContainer>
+			<Footer />
 		</PageContainer>
 	);
 };

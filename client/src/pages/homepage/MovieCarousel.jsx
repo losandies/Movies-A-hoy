@@ -1,47 +1,28 @@
-import tw from 'twin.macro';
-import styled from 'styled-components';
 import React, { useContext } from 'react';
 import { Autoplay, Navigation } from 'swiper';
 import { useNavigate } from 'react-router-dom';
 import { MoviesContext } from '../../contexts/moviesContext';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
+import styled from 'styled-components';
+import tw from 'twin.macro';
+import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import '../../App.css';
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
+import {
+	CarouselContainer,
+	ImageOverlay,
+	MovieImage,
+	MovieTitle,
+	MovieTitleContainer,
+	NowPlayingContainer,
+	NowPlayingText,
+} from './carouselStyles';
 
-const CarouselContainer = styled.div`
-	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px]`}
-`;
 const StyledSwiper = styled(Swiper)`
 	${tw`w-[95%] h-full rounded-md`}
-`;
-const MovieImage = styled.img`
-	object-fit: cover;
-	${tw`w-full h-full absolute`}
-`;
-const ImageOverlay = styled.div`
-	background: linear-gradient(rgba(0, 130, 170, 0), #000000);
-	position: absolute;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-`;
-const MovieTitleContainer = styled.div`
-	${tw`absolute bottom-1 z-10 w-full p-4`}
-`;
-const MovieTitle = styled.h2`
-	${tw`text-white text-xl font-semibold`}
-`;
-const NowPlayingText = styled.h3`
-	${tw`text-base md:text-2xl text-white font-bold uppercase mx-4`}
-`;
-const NowPlayingContainer = styled.div`
-	${tw`w-full h-10 mb-4 md:mb-8 md:ml-2 md:p-4`}
 `;
 
 export default function MovieCarousel({ movies }) {
@@ -57,7 +38,7 @@ export default function MovieCarousel({ movies }) {
 				<NowPlayingText>In Theatres Now</NowPlayingText>
 			</NowPlayingContainer>
 			<CarouselContainer>
-				<StyledSwiper
+				<Swiper
 					slidesPerView={isMobile ? 1 : 3}
 					spaceBetween={20}
 					loop={true}
@@ -68,7 +49,7 @@ export default function MovieCarousel({ movies }) {
 						disableOnInteraction: false,
 					}}
 					modules={[Navigation, Autoplay]}
-					className="mySwiper"
+					className="mySwiper w-[95%] h-full rounded-md"
 				>
 					{movies.map((movie) => (
 						<SwiperSlide
@@ -96,7 +77,7 @@ export default function MovieCarousel({ movies }) {
 							/>
 						</SwiperSlide>
 					))}
-				</StyledSwiper>
+				</Swiper>
 			</CarouselContainer>
 		</>
 	);

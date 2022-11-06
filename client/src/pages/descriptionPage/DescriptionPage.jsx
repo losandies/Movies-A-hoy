@@ -2,87 +2,39 @@ import React, { useContext, useState, useEffect } from 'react';
 import {
 	BackButton,
 	PageContainer,
-	MovieRow,
 	MoviePoster,
 } from '../../components/globalComponents';
 import { MoviesContext } from '../../contexts/moviesContext';
-import tw from 'twin.macro';
-import styled from 'styled-components';
 import { MdArrowBackIosNew } from 'react-icons/md';
-import { RiHeart3Fill } from 'react-icons/ri';
-import { RiHeart3Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import DescriptionOverlay from './DescriptionOverlay';
-
-const MovieHeroImage = styled.img`
-	object-fit: cover;
-	object-position: 50% 50%;
-
-	${tw`w-full h-[320px] md:h-[500px]`}
-`;
-const ImageContainer = styled.div`
-	${tw`w-full h-[320px] md:h-[500px] relative`}
-`;
-
-const ImageOverlay = styled.div`
-	background: linear-gradient(rgba(0, 130, 170, 0), #000000);
-
-	${tw`absolute top-0 w-full h-[320px] md:h-[500px]`}
-`;
-
-const MovieTitleContainer = styled.div`
-	${tw`absolute md:top-[430px] flex justify-between items-center z-10 w-full p-4`}
-`;
-
-const MovieTitle = styled.h2`
-	${tw`text-white text-2xl font-semibold`}
-`;
-
-const LikeIcon = styled.span`
-	${tw`text-3xl text-white`}
-`;
-
-const MovieOverviewContainer = styled.div`
-	${tw`w-full h-auto flex p-4`}
-`;
-
-const MovieOverview = styled.p`
-	overflow: hidden;
-	display: -webkit-box;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-
-	${tw`text-white text-base mt-1`}
-`;
-
-const GenreContainer = styled.div`
-	${tw`flex w-[95%] flex-wrap items-center justify-start`}
-`;
-
-const GenreBlock = styled.div`
-	${tw`h-8 ml-4 mb-4 p-2 bg-[#ffffff] rounded-md flex justify-center items-center`}
-`;
-
-const GenreText = styled.p`
-	${tw`text-sm font-bold text-gray-900`}
-`;
-
-const RecommendationContainer = styled(MovieRow)`
-	${tw`w-full flex-wrap overflow-visible justify-around p-0`}
-`;
-const RecommendationTitle = styled.h3`
-	${tw`text-xl text-white font-bold ml-4 mt-5 mb-2`}
-`;
+import {
+	GenreBlock,
+	GenreContainer,
+	GenreText,
+	ImageContainer,
+	ImageOverlay,
+	MovieHeroImage,
+	MovieOverview,
+	MovieOverviewContainer,
+	MovieTitle,
+	MovieTitleContainer,
+	RecommendationContainer,
+	RecommendationTitle,
+} from './styles';
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../../responsive/screens';
+import Footer from '../../components/footer/Footer';
 
 const DescriptionPage = () => {
 	const { currentSelection, setCurrentSelection, currentPage } =
 		useContext(MoviesContext);
 	const [genres, setGenres] = useState([]);
 	const [recommendations, setRecommendations] = useState([]);
-	const [isLiked, setIsLiked] = useState(false);
 	const [descriptionIsClicked, setDescriptionIsClicked] = useState(false);
+	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 
 	const navigate = useNavigate();
 
@@ -92,7 +44,6 @@ const DescriptionPage = () => {
 			`https://api.themoviedb.org/3/find/${currentSelection.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
 		);
 
-		// Check if movie or TV show
 		const isTVShow = currentSelection.first_air_date;
 
 		let genres = await axios.get(
@@ -115,7 +66,10 @@ const DescriptionPage = () => {
 			genreList.push(genre.name);
 		});
 		setGenres(genreList);
-		setRecommendations(recommData);
+		setRecommendations(
+			// isMobile ? recommData.slice(0, 12) : recommData.slice(0, 10)
+			recommData.slice(0, 20)
+		);
 	};
 
 	// Some objects have 'name' properties some have 'titles' instead
@@ -128,7 +82,7 @@ const DescriptionPage = () => {
 
 	useEffect(() => {
 		getMovieGenresAndRecommendations();
-	}, [currentSelection, recommendations]);
+	}, [currentSelection]);
 
 	return (
 		<>
@@ -163,13 +117,6 @@ const DescriptionPage = () => {
 				}`}
 					>
 						<MovieTitle>{mediaName || mediaTitle}</MovieTitle>
-						<LikeIcon onClick={() => setIsLiked(!isLiked)}>
-							{isLiked ? (
-								<RiHeart3Fill className="text-red-500" />
-							) : (
-								<RiHeart3Line />
-							)}
-						</LikeIcon>
 					</MovieTitleContainer>
 					<ImageOverlay />
 					<MovieHeroImage
@@ -208,6 +155,7 @@ const DescriptionPage = () => {
 						/>
 					))}
 				</RecommendationContainer>
+				<Footer />
 			</PageContainer>
 		</>
 	);

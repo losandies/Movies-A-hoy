@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { NavBar } from '../../components/navbar';
+import { NavBar } from '../../components/navbar/Navbar';
 import { UserContext } from '../../contexts/userContext';
 import axios from 'axios';
 import {

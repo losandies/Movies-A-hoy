@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { NavBar } from '../../components/navbar';
+import { NavBar } from '../../components/navbar/Navbar';
 import MovieCarousel from './MovieCarousel';
 import MovieSection from '../../components/MovieSection';
 import { MoviesContext } from '../../contexts/moviesContext';
 import { PageContainer } from '../../components/globalComponents';
 import { UserContext } from '../../contexts/userContext';
-import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/footer/Footer';
 
 export default function HomePage() {
-	const { checkAuthenticated, isAuthorized, user } = useContext(UserContext);
+	const { user } = useContext(UserContext);
 	const { setCurrentPage } = useContext(MoviesContext);
-	const navigate = useNavigate();
 
 	const userFirstName = user.name.split(' ')[0];
 
@@ -30,7 +29,6 @@ export default function HomePage() {
 		const suggestedForYou = await axios.get(
 			`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&with_genres=${user.favorite_genre}&language=en-US&primary_release_date.gte=2005&primary_release_date.lte=2022-11-01&region=US`
 		);
-
 		const nowPlaying = await axios.get(
 			`https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&page=1&region=US`
 		);
@@ -69,33 +67,36 @@ export default function HomePage() {
 	}, []);
 
 	return (
-		<PageContainer>
-			<NavBar />
-			<MovieCarousel movies={movieData.nowPlayingMovies} />
-			<MovieSection
-				movies={movieData.suggestedMovies}
-				sectionTitle={`Suggested for ${userFirstName}`}
-			></MovieSection>
-			<MovieSection
-				movies={movieData.trending}
-				sectionTitle="Trending This Week"
-			/>
-			<MovieSection
-				movies={movieData.upcomingMovies}
-				sectionTitle="Upcoming Releases"
-			/>
-			<MovieSection
-				movies={movieData.originals}
-				sectionTitle="Original TV Shows"
-			/>
-			<MovieSection
-				movies={movieData.popularMovies}
-				sectionTitle="Popular Movies"
-			/>
-			<MovieSection
-				movies={movieData.topRatedMovies}
-				sectionTitle="Top Rated Movies"
-			/>
-		</PageContainer>
+		<>
+			<PageContainer>
+				<NavBar />
+				<MovieCarousel movies={movieData.nowPlayingMovies} />
+				<MovieSection
+					movies={movieData.suggestedMovies}
+					sectionTitle={`Suggested for ${userFirstName}`}
+				></MovieSection>
+				<MovieSection
+					movies={movieData.trending}
+					sectionTitle="Trending This Week"
+				/>
+				<MovieSection
+					movies={movieData.upcomingMovies}
+					sectionTitle="Upcoming Releases"
+				/>
+				<MovieSection
+					movies={movieData.originals}
+					sectionTitle="Original TV Shows"
+				/>
+				<MovieSection
+					movies={movieData.popularMovies}
+					sectionTitle="Popular Movies"
+				/>
+				<MovieSection
+					movies={movieData.topRatedMovies}
+					sectionTitle="Top Rated Movies"
+				/>
+				<Footer />
+			</PageContainer>
+		</>
 	);
 }
