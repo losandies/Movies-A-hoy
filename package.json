@@ -1,7 +1,4 @@
 {
-	"engines": {
-		"node": "14.17.0"
-	},
 	"main": "app.js",
 	"dependencies": {
 		"bcrypt": "^5.1.0",
@@ -21,5 +18,9 @@
 		"build": "cd client && npm run build",
 		"start": "node app.js",
 		"heroku-postbuild": "cd client && npm install && npm run build"
+	},
+	"engines": {
+		"node": "16.17.0",
+		"npm": "8.15.0"
 	}
 }
