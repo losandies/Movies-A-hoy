@@ -26,7 +26,7 @@ const NavItem = styled.li`
 		`}
 `;
 
-export function NavItems() {
+const NavItems = () => {
 	const isMobile = useMediaQuery({ maxWidth: SCREENS.sm });
 	const { isLoggedIn } = useContext(UserContext);
 
@@ -65,4 +65,6 @@ export function NavItems() {
 			{isLoggedIn ? <NavItem onClick={logOut}>Log Out</NavItem> : null}
 		</ListContainer>
 	);
-}
+};
+
+export default NavItems;
