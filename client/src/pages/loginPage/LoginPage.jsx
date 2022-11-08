@@ -17,7 +17,7 @@ import {
 import { toast } from 'react-toastify';
 
 const LoginPage = () => {
-	const { isAuthorized, setIsAuthorized } = useContext(UserContext);
+	const { isAuthorized } = useContext(UserContext);
 	const [userInfo, setUserInfo] = useState({
 		email: '',
 		password: '',
@@ -38,10 +38,7 @@ const LoginPage = () => {
 		e.preventDefault();
 
 		try {
-			const res = await axios.post(
-				'http://localhost:9000/auth/login',
-				userInfo
-			);
+			const res = await axios.post('/auth/login', userInfo);
 
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
@@ -50,7 +47,7 @@ const LoginPage = () => {
 				console.log(res);
 			}
 		} catch (err) {
-			toast.error(err.response);
+			toast.error(err.response.data);
 		}
 	};
 

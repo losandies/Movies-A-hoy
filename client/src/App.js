@@ -4,12 +4,7 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import {
-	BrowserRouter as Router,
-	Route,
-	Routes,
-	useNavigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
@@ -27,30 +22,30 @@ const AppContainer = styled.div`
 function App() {
 	const [currentSelection, setCurrentSelection] = useState({});
 	const [currentPage, setCurrentPage] = useState('home');
-	const [isAuthorized, setIsAuthorized] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState({});
 
 	const checkUserLoggedIn = async () => {
 		try {
-			const res = await axios.get('http://localhost:9000/auth/me', {
+			const res = await axios.get('/auth/me', {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('token')}`,
 				},
 			});
 			if (res) {
 				setUser(res.data);
-				setIsAuthorized(true);
+				setIsLoggedIn(true);
 			}
 		} catch (err) {
-			setIsAuthorized(false);
+			setIsLoggedIn(false);
 		}
 	};
 
 	return (
 		<UserContext.Provider
 			value={{
-				setIsAuthorized,
-				isAuthorized,
+				setIsLoggedIn,
+				isLoggedIn,
 				user,
 				checkUserLoggedIn,
 				setUser,

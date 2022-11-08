@@ -12,20 +12,20 @@ module.exports = (req, res, next) => {
 	};
 
 	if (req.path === '/register') {
-		if (!validPassword(password)) {
+		if (
+			![email, firstName, lastName, password, favorite_genre].every(Boolean)
+		) {
+			return res.status(401).json('Missing one or more fields');
+		} else if (!validEmail(email)) {
+			return res.status(401).json('Invalid Email');
+		} else if (!validPassword(password)) {
 			return res
 				.status(401)
 				.json(
 					'Password must be 8 or more characters and contain at least one letter and one number'
 				);
-		} else if (!validEmail(email)) {
-			return res.status(401).json('Invalid Email');
 		} else if (!favorite_genre) {
 			return res.status(401).json('Please select yuor favorite genre');
-		} else if (
-			![email, firstName, lastName, password, favorite_genre].every(Boolean)
-		) {
-			return res.status(401).json('Missing one or more fields');
 		}
 	} else if (req.path === '/login') {
 		if (![email, password].every(Boolean)) {

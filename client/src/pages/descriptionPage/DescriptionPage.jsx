@@ -1,15 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { MoviesContext } from '../../contexts/moviesContext';
+import { MdArrowBackIosNew } from 'react-icons/md';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import DescriptionOverlay from './DescriptionOverlay';
+import Footer from '../../components/footer/Footer';
+import { useMediaQuery } from 'react-responsive';
+import { SCREENS } from '../../responsive/screens';
 import {
 	BackButton,
 	PageContainer,
 	MoviePoster,
 } from '../../components/globalComponents';
-import { MoviesContext } from '../../contexts/moviesContext';
-import { MdArrowBackIosNew } from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import DescriptionOverlay from './DescriptionOverlay';
 import {
 	GenreBlock,
 	GenreContainer,
@@ -24,9 +26,6 @@ import {
 	RecommendationContainer,
 	RecommendationTitle,
 } from './styles';
-import { useMediaQuery } from 'react-responsive';
-import { SCREENS } from '../../responsive/screens';
-import Footer from '../../components/footer/Footer';
 
 const DescriptionPage = () => {
 	const { currentSelection, setCurrentSelection, currentPage } =
@@ -40,9 +39,6 @@ const DescriptionPage = () => {
 
 	const getMovieGenresAndRecommendations = async () => {
 		const genreList = [];
-		let getMovieById = await axios.get(
-			`https://api.themoviedb.org/3/find/${currentSelection.id}?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&language=en-US&external_source=imdb_id`
-		);
 
 		const isTVShow = currentSelection.first_air_date;
 

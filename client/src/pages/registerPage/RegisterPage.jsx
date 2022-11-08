@@ -41,16 +41,11 @@ const RegisterPage = () => {
 		});
 	};
 
-	const invalidFields = () => {};
-
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			const res = await axios.post(
-				'http://localhost:9000/auth/register',
-				userInfo
-			);
+			const res = await axios.post('/auth/register', userInfo);
 
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
