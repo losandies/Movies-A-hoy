@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import NavItems from './NavItems';
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
 import { HiSearch } from 'react-icons/hi';
+import NavItems from '../navbar/NavItems';
 
 const NavContainer = styled.div`
 	min-height: 68px;
