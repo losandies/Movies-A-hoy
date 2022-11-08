@@ -1,4 +1,4 @@
-export default {
+export const menuStyles = {
 	bmBurgerButton: {
 		position: 'relative',
 		width: '20px',

@@ -4,7 +4,7 @@ import tw from 'twin.macro';
 import { useMediaQuery } from 'react-responsive';
 import { slide as Menu } from 'react-burger-menu';
 import { SCREENS } from '../../responsive/screens';
-import menuStyles from './menuStyles';
+import { menuStyles } from './menuStyles';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/userContext';
 
