@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
 import { HiSearch } from 'react-icons/hi';
-import NavItems from '../navbar/NavItems';
+import NavItems from '../navbar/NavItems.jsx';
 
 const NavContainer = styled.div`
 	min-height: 68px;
