@@ -4,7 +4,12 @@ import './App.css';
 import HomePage from './pages/homepage/HomePage';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Route,
+	Routes,
+	useNavigate,
+} from 'react-router-dom';
 import DescriptionPage from './pages/descriptionPage/DescriptionPage';
 import { MoviesContext } from './contexts/moviesContext';
 import SearchPage from './pages/searchPage/SearchPage';
@@ -12,6 +17,8 @@ import RegisterPage from './pages/registerPage/RegisterPage';
 import LoginPage from './pages/loginPage/LoginPage';
 import { UserContext } from './contexts/userContext';
 import PrivateRoute from './components/PrivateRoute';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AppContainer = styled.div`
 	${tw`w-full h-full flex flex-col`}
@@ -22,19 +29,6 @@ function App() {
 	const [currentPage, setCurrentPage] = useState('home');
 	const [isAuthorized, setIsAuthorized] = useState(false);
 	const [user, setUser] = useState({});
-
-	// const checkAuthenticated = async () => {
-	// 	try {
-	// 		const res = await axios.get('http://localhost:9000/auth/verify', {
-	// 			headers: {
-	// 				Authorization: `Bearer ${localStorage.getItem('token')}`,
-	// 			},
-	// 		});
-	// 		if (res.data === true) setIsAuthorized(true);
-	// 	} catch (error) {
-	// 		setIsAuthorized(false);
-	// 	}
-	// };
 
 	const checkUserLoggedIn = async () => {
 		try {
@@ -52,14 +46,6 @@ function App() {
 		}
 	};
 
-	const logOut = () => {
-		localStorage.removeItem('token');
-	};
-
-	useEffect(() => {
-		checkUserLoggedIn();
-	}, []);
-
 	return (
 		<UserContext.Provider
 			value={{
@@ -67,7 +53,7 @@ function App() {
 				isAuthorized,
 				user,
 				checkUserLoggedIn,
-				logOut,
+				setUser,
 			}}
 		>
 			<MoviesContext.Provider
@@ -95,6 +81,7 @@ function App() {
 						</Routes>
 					</Router>
 				</AppContainer>
+				<ToastContainer />
 			</MoviesContext.Provider>
 		</UserContext.Provider>
 	);

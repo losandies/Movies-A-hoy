@@ -4,7 +4,7 @@ import tw from 'twin.macro';
 import { BsGithub, BsLinkedin, BsTwitter } from 'react-icons/bs';
 
 const FooterContainer = styled.div`
-	${tw`flex justify-center items-center w-full h-[60px] mt-8 bg-gray-700`}
+	${tw`flex justify-center items-center relative bottom-0 w-full h-[60px] bg-gray-700`}
 `;
 
 const SocialsList = styled.ul`

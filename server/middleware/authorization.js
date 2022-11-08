@@ -15,12 +15,12 @@ module.exports = async (req, res, next) => {
 			console.log(payload);
 
 			req.user = payload.user;
-			return next();
 		} catch (err) {
 			console.error(err.message);
 			res.status(403).json(false);
 		}
 	}
+	next();
 };
 // const jwt = require('jsonwebtoken');
 // require('dotenv').config();

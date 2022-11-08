@@ -7,6 +7,9 @@ const PrivateRoute = () => {
 
 	useEffect(() => {
 		checkUserLoggedIn();
+		setTimeout(function () {
+			window.location = '';
+		}, 1800000);
 	}, []);
 
 	return isAuthorized ? <Outlet /> : <Navigate to="/login" />;

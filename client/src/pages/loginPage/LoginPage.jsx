@@ -14,6 +14,7 @@ import {
 	LongInput,
 	Separator,
 } from './styles';
+import { toast } from 'react-toastify';
 
 const LoginPage = () => {
 	const { isAuthorized, setIsAuthorized } = useContext(UserContext);
@@ -45,9 +46,11 @@ const LoginPage = () => {
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
 				navigate('/');
+			} else {
+				console.log(res);
 			}
 		} catch (err) {
-			console.log(err.message);
+			toast.error(err.response);
 		}
 	};
 

@@ -18,6 +18,7 @@ import {
 	RegisterButton,
 	AlternateText,
 } from './styles';
+import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
 	const [userInfo, setUserInfo] = useState({
@@ -40,6 +41,8 @@ const RegisterPage = () => {
 		});
 	};
 
+	const invalidFields = () => {};
+
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
@@ -54,7 +57,7 @@ const RegisterPage = () => {
 				navigate('/');
 			}
 		} catch (err) {
-			console.log(err.message);
+			toast.error(err.response.data);
 		}
 	};
 

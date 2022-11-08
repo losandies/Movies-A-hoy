@@ -44,7 +44,7 @@ export default function MovieCarousel({ movies }) {
 					loop={true}
 					navigation={true}
 					autoplay={{
-						delay: 3000,
+						delay: 4000,
 						pauseOnMouseEnter: true,
 						disableOnInteraction: false,
 					}}

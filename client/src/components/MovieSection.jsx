@@ -3,12 +3,11 @@ import { useContext } from 'react';
 import { MoviesContext } from '../contexts/moviesContext';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import { MovieRow } from './globalComponents';
-import { MoviePoster } from './globalComponents';
+import { MoviePoster, MovieRow } from './globalComponents';
 import { useNavigate } from 'react-router-dom';
 
 const SectionContainer = styled.div`
-	${tw`mt-8 md:mx-2`}
+	${tw`mt-4 md:mt-8 md:mx-2 h-60 md:h-auto`}
 `;
 
 const SectionTitle = styled.h2`
@@ -16,14 +15,12 @@ const SectionTitle = styled.h2`
 `;
 
 export default function MovieSection({ movies, sectionTitle }) {
-	const { setCurrentSelection, currentSelection } = useContext(MoviesContext);
+	const { setCurrentSelection } = useContext(MoviesContext);
 	const navigate = useNavigate();
 
 	return (
 		<SectionContainer>
-			<SectionTitle onClick={() => console.log(currentSelection)}>
-				{sectionTitle}
-			</SectionTitle>
+			<SectionTitle>{sectionTitle}</SectionTitle>
 			<MovieRow>
 				{movies.map((movie) => (
 					<MoviePoster

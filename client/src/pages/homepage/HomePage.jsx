@@ -11,6 +11,7 @@ import Footer from '../../components/footer/Footer';
 export default function HomePage() {
 	const { user } = useContext(UserContext);
 	const { setCurrentPage } = useContext(MoviesContext);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const userFirstName = user.name.split(' ')[0];
 
@@ -26,6 +27,8 @@ export default function HomePage() {
 	});
 
 	const fetchMovieData = async () => {
+		setIsLoading(true);
+
 		const suggestedForYou = await axios.get(
 			`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&with_genres=${user.favorite_genre}&language=en-US&primary_release_date.gte=2005&primary_release_date.lte=2022-11-01&region=US`
 		);
@@ -58,13 +61,17 @@ export default function HomePage() {
 			originals: originals.data.results,
 		});
 
-		console.log(movieData.suggestedMovies);
+		setIsLoading(false);
 	};
 
 	useEffect(() => {
 		fetchMovieData();
 		setCurrentPage('home');
 	}, []);
+
+	if (isLoading) {
+		return <h1>Hello</h1>;
+	}
 
 	return (
 		<>

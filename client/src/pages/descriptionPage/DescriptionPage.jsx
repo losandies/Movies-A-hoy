@@ -66,10 +66,22 @@ const DescriptionPage = () => {
 			genreList.push(genre.name);
 		});
 		setGenres(genreList);
-		setRecommendations(
-			// isMobile ? recommData.slice(0, 12) : recommData.slice(0, 10)
-			recommData.slice(0, 20)
-		);
+
+		if (!recommData) {
+			let sameGenre = await axios.get(
+				`https://api.themoviedb.org/3/discover/movie?api_key=${process.env.REACT_APP_MOVIEDB_API_KEY}&with_genres=${genreData[0]}&language=en-US&region=US`
+			);
+
+			const sameGenreData = sameGenre.data.results;
+
+			setRecommendations(
+				isMobile ? sameGenreData.slice(0, 18) : sameGenreData.slice(0, 20)
+			);
+		} else {
+			setRecommendations(
+				isMobile ? recommData.slice(0, 18) : recommData.slice(0, 20)
+			);
+		}
 	};
 
 	// Some objects have 'name' properties some have 'titles' instead
@@ -95,15 +107,7 @@ const DescriptionPage = () => {
 			<PageContainer>
 				<ImageContainer>
 					<BackButton>
-						<Link
-							to={
-								currentPage === 'home'
-									? '/'
-									: currentPage === 'search'
-									? '/search'
-									: null
-							}
-						>
+						<Link to={currentPage === 'home' ? '/' : '/search'}>
 							<MdArrowBackIosNew />
 						</Link>
 					</BackButton>
