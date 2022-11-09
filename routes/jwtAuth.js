@@ -32,7 +32,6 @@ router.post('/register', validInfo, async (req, res) => {
 
 		res.json({ ...newUser.rows[0], token });
 	} catch (err) {
-		console.log(err.message);
 		res.status(500).send('Server Error');
 	}
 });
@@ -58,32 +57,26 @@ router.post('/login', validInfo, async (req, res) => {
 		const token = jwtGenerator(user.rows[0].user_id);
 		res.json({ ...user.rows[0], token });
 	} catch (err) {
-		console.log(err.message);
 		res.send(500).send('Server Error');
 	}
 });
 
 router.get('/verify', authorization, async (req, res) => {
-	console.log('hit');
 	try {
 		res.json(true);
 	} catch (err) {
-		console.error(err);
 		res.status(500).send('Server Error');
 	}
 });
 
 router.get('/me', authorization, async (req, res) => {
-	console.log('hit');
 	try {
 		const user = await db.query(
 			'SELECT name, favorite_genre FROM users WHERE user_id = $1',
 			[req.user]
 		);
-
 		res.json(user.rows[0]);
 	} catch (err) {
-		console.error(err);
 		res.status(500).send('Server Error');
 	}
 });

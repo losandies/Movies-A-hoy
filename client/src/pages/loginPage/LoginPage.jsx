@@ -17,7 +17,7 @@ import {
 import { toast } from 'react-toastify';
 
 const LoginPage = () => {
-	const { isAuthorized } = useContext(UserContext);
+	const { isLoggedIn } = useContext(UserContext);
 	const [userInfo, setUserInfo] = useState({
 		email: '',
 		password: '',
@@ -43,8 +43,6 @@ const LoginPage = () => {
 			if (res.data.token) {
 				localStorage.setItem('token', res.data.token);
 				navigate('/');
-			} else {
-				console.log(res);
 			}
 		} catch (err) {
 			toast.error(err.response.data);
@@ -52,7 +50,7 @@ const LoginPage = () => {
 	};
 
 	useEffect(() => {
-		if (isAuthorized) {
+		if (isLoggedIn) {
 			navigate('/');
 		}
 	});

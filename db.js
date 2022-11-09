@@ -7,10 +7,10 @@ const devConfig = {
 	host: process.env.PG_HOST,
 	port: process.env.PG_PORT,
 	database: process.env.PG_DATABASE,
-	ssl: {
-		required: true,
-		rejectUnauthorized: false,
-	},
+	// ssl: {
+	// 	required: true,
+	// 	rejectUnauthorized: false,
+	// },
 };
 
 const prodConfig = {

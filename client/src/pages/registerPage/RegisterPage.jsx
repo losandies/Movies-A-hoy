@@ -29,7 +29,7 @@ const RegisterPage = () => {
 		favorite_genre: null,
 	});
 
-	const { isAuthorized } = useContext(UserContext);
+	const { isLoggedIn } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const { firstName, lastName, email, password, favorite_genre } = userInfo;
@@ -57,7 +57,7 @@ const RegisterPage = () => {
 	};
 
 	useEffect(() => {
-		if (isAuthorized) {
+		if (isLoggedIn) {
 			navigate('/');
 		}
 	});
