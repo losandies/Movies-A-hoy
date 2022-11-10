@@ -6,7 +6,6 @@ import MovieSection from '../../components/MovieSection';
 import { MoviesContext } from '../../contexts/moviesContext';
 import { PageContainer } from '../../components/globalComponents';
 import { UserContext } from '../../contexts/userContext';
-import Footer from '../../components/footer/Footer';
 
 export default function HomePage() {
 	const { user } = useContext(UserContext);
@@ -93,7 +92,6 @@ export default function HomePage() {
 					movies={movieData.topRatedMovies}
 					sectionTitle="Top Rated Movies"
 				/>
-				<Footer />
 			</PageContainer>
 		</>
 	);

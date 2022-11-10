@@ -26,10 +26,12 @@ export const MovieRow = styled.div`
 
 export const MoviePoster = styled.img`
 	${tw`m-2 md:m-2 md:my-4 w-28 sm:w-40 sm:m-4 rounded-sm cursor-pointer`}
-	transition: ease-in-out 150ms;
 
-	&:hover {
-		transform: scale(1.15);
+	@media (min-width: 500px) {
+		&:hover {
+			transition: ease-in-out 150ms;
+			transform: scale(1.15);
+		}
 	}
 `;
 

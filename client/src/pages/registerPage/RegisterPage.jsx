@@ -21,6 +21,7 @@ import {
 import { toast } from 'react-toastify';
 
 const RegisterPage = () => {
+	const { isLoggedIn } = useContext(UserContext);
 	const [userInfo, setUserInfo] = useState({
 		firstName: '',
 		lastName: '',
@@ -29,7 +30,6 @@ const RegisterPage = () => {
 		favorite_genre: null,
 	});
 
-	const { isLoggedIn } = useContext(UserContext);
 	const navigate = useNavigate();
 
 	const { firstName, lastName, email, password, favorite_genre } = userInfo;

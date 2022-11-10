@@ -4,7 +4,6 @@ import { MdArrowBackIosNew } from 'react-icons/md';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DescriptionOverlay from './DescriptionOverlay';
-import Footer from '../../components/footer/Footer';
 import { useMediaQuery } from 'react-responsive';
 import { SCREENS } from '../../responsive/screens';
 import {
@@ -30,6 +29,7 @@ import {
 const DescriptionPage = () => {
 	const { currentSelection, setCurrentSelection, currentPage } =
 		useContext(MoviesContext);
+
 	const [genres, setGenres] = useState([]);
 	const [recommendations, setRecommendations] = useState([]);
 	const [descriptionIsClicked, setDescriptionIsClicked] = useState(false);
@@ -155,7 +155,6 @@ const DescriptionPage = () => {
 						/>
 					))}
 				</RecommendationContainer>
-				<Footer />
 			</PageContainer>
 		</>
 	);

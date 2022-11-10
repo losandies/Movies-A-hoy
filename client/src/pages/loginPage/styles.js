@@ -23,6 +23,9 @@ export const LoginText = styled.h2`
 export const LoginButton = styled.button`
 	${tw`w-[95%] h-12 bg-blue-800 text-xl text-white mb-4`}
 `;
+export const GuestLoginButton = styled.button`
+	${tw`w-[95%] h-12 bg-red-600 text-xl text-white mb-4`}
+`;
 export const AlternateText = styled.p`
 	${tw`text-white text-xs`}
 `;

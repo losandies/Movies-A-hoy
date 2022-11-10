@@ -6,6 +6,7 @@ import axios from 'axios';
 import {
 	AlternateText,
 	ButtonContainer,
+	GuestLoginButton,
 	InputContainer,
 	LoginButton,
 	LoginForm,
@@ -49,6 +50,14 @@ const LoginPage = () => {
 		}
 	};
 
+	const guestSignIn = () => {
+		setUserInfo({
+			email: 'guest@gmail.com',
+			password: 'guest123',
+		});
+		onSubmit();
+	};
+
 	useEffect(() => {
 		if (isLoggedIn) {
 			navigate('/');
@@ -82,6 +91,9 @@ const LoginPage = () => {
 				<Separator />
 				<ButtonContainer>
 					<LoginButton>Sign In</LoginButton>
+					<GuestLoginButton onClick={guestSignIn}>
+						Guest Sign In
+					</GuestLoginButton>
 					<AlternateText>
 						Don't have an account yet? Sign up{' '}
 						<Link to="/register" className="underline">
