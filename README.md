@@ -6,9 +6,14 @@ I have created a movie library application that makes use of the TMDB(The Movie 
 
 You can find the live demo [here](www.movies-ahoy.stromboapp.com).
 
+## Desktop View
+
 <img src="/client/src/assets/images/homepage.png">
 <img src="/client/src/assets/images/description.png">
 <img src="/client/src/assets/images/search.png">
+
+## Mobile View
+
 <img src="/client/src/assets/images/movies.png">
 
 ## Technology Used
