@@ -6,10 +6,10 @@ I have created a movie library application that makes use of the TMDB(The Movie 
 
 You can find the live demo [here](www.movies-ahoy.stromboapp.com).
 
-<img src="/client/src/assets/images/homepage.png">
-<img src="/client/src/assets/images/description.png">
-<img src="/client/src/assets/images/search.png">
-<img src="/client/src/assets/images/Movies-ahoy.png">
+<img src="/client/src/assets/images/homepage.jpg">
+<img src="/client/src/assets/images/description.jpg">
+<img src="/client/src/assets/images/search.jpg">
+<img src="/client/src/assets/images/Movies-ahoy.jpg">
 
 ## Technology Used
 
