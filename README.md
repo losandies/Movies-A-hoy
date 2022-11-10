@@ -4,7 +4,7 @@
 
 I have created a movie library application that makes use of the TMDB(The Movie Database) API. This application lays out things like what movies or shows are trending this week, what's new in theatres, popular movies of the year, and even recommends movies based of the user's favorite genre! I also implemented a search function so that a user may search movies to their heart's content.
 
-You can find the live demo [here](www.movies-ahoy.stromboapp.com).
+You can find the live demo <a href="movies-ahoy.herokuapp.com" target="_blank" >here</a>.
 
 ## Desktop View
 
