@@ -5,6 +5,9 @@ import { PageContainer } from '../../components/globalComponents';
 export const RegisterPageContainer = styled(PageContainer)`
 	${tw`items-center`}
 `;
+export const FormContainer = styled.div`
+	${tw`flex flex-col items-center justify-center h-full w-full`}
+`;
 export const RegisterForm = styled.form`
 	${tw`w-[80%] md:max-w-md flex flex-col justify-center items-center`}
 `;
@@ -30,13 +33,13 @@ export const LabelText = styled.h3`
 	${tw` ml-1 text-base text-white`}
 `;
 export const RegisterText = styled.h2`
-	${tw`text-white text-2xl mt-16 md:mt-60`}
+	${tw`text-white text-2xl`}
 `;
 export const RegisterButton = styled.button`
 	${tw`w-[95%] h-12 bg-blue-800 text-xl text-white mb-4`}
 `;
 export const AlternateText = styled.p`
-	${tw`text-white text-xs`}
+	${tw`text-xs text-white`}
 `;
 export const Separator = styled.div`
 	${tw`w-full bg-gray-800 h-[1px] my-6`}

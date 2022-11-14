@@ -6,6 +6,7 @@ import axios from 'axios';
 import {
 	AlternateText,
 	ButtonContainer,
+	FormContainer,
 	GuestLoginButton,
 	InputContainer,
 	LoginButton,
@@ -67,41 +68,44 @@ const LoginPage = () => {
 	return (
 		<LoginPageContainer>
 			<NavBar />
-			<LoginText>Sign In Here</LoginText>
-			<LoginForm onSubmit={onSubmit}>
-				<Separator />
-				<InputContainer>
-					<LongInput
-						type="email"
-						name="email"
-						value={email}
-						placeholder="Email"
-						onChange={onChange}
-					/>
-				</InputContainer>
-				<InputContainer>
-					<LongInput
-						type="password"
-						name="password"
-						value={password}
-						placeholder="Password"
-						onChange={onChange}
-					/>
-				</InputContainer>
-				<Separator />
-				<ButtonContainer>
-					<LoginButton>Sign In</LoginButton>
-					<GuestLoginButton onClick={guestSignIn}>
-						Guest Sign In
-					</GuestLoginButton>
-					<AlternateText>
-						Don't have an account yet? Sign up{' '}
-						<Link to="/register" className="underline">
-							here
-						</Link>
-					</AlternateText>
-				</ButtonContainer>
-			</LoginForm>
+
+			<FormContainer>
+				<LoginForm onSubmit={onSubmit}>
+					<LoginText>Sign In Here</LoginText>
+					<Separator />
+					<InputContainer>
+						<LongInput
+							type="email"
+							name="email"
+							value={email}
+							placeholder="Email"
+							onChange={onChange}
+						/>
+					</InputContainer>
+					<InputContainer>
+						<LongInput
+							type="password"
+							name="password"
+							value={password}
+							placeholder="Password"
+							onChange={onChange}
+						/>
+					</InputContainer>
+					<Separator />
+					<ButtonContainer>
+						<LoginButton>Sign In</LoginButton>
+						<GuestLoginButton onClick={guestSignIn}>
+							Guest Sign In
+						</GuestLoginButton>
+						<AlternateText>
+							Don't have an account yet? Sign up{' '}
+							<Link to="/register" className="underline">
+								here
+							</Link>
+						</AlternateText>
+					</ButtonContainer>
+				</LoginForm>
+			</FormContainer>
 		</LoginPageContainer>
 	);
 };

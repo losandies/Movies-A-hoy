@@ -3,7 +3,11 @@ import tw from 'twin.macro';
 import { PageContainer } from '../../components/globalComponents';
 
 export const LoginPageContainer = styled(PageContainer)`
-	${tw`items-center`}
+	${tw`items-center h-full`}
+`;
+
+export const FormContainer = styled.div`
+	${tw`flex items-center justify-center h-full w-full`}
 `;
 export const LoginForm = styled.form`
 	${tw`w-[80%] md:max-w-md flex flex-col justify-center items-center`}
@@ -18,7 +22,7 @@ export const LongInput = styled.input`
 	${tw`w-[95%] h-10 md:my-4 p-2 md:py-6 border-2 border-black rounded-sm`}
 `;
 export const LoginText = styled.h2`
-	${tw`text-white text-2xl mt-16 md:mt-60`}
+	${tw`text-white text-2xl sm:mt-0`}
 `;
 export const LoginButton = styled.button`
 	${tw`w-[95%] h-12 bg-blue-800 text-xl text-white mb-4`}

@@ -21,10 +21,6 @@ import {
 	NowPlayingText,
 } from './carouselStyles';
 
-const StyledSwiper = styled(Swiper)`
-	${tw`w-[95%] h-full rounded-md`}
-`;
-
 export default function MovieCarousel({ movies }) {
 	const { setCurrentSelection } = useContext(MoviesContext);
 

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import Swiper from 'swiper';
 import tw from 'twin.macro';
 
 export const CarouselContainer = styled.div`
-	${tw`w-full min-h-[16rem] md:min-h-[30rem] lg:min-h-[45rem] mb-[25px]`}
+	${tw`w-full min-h-[16rem] md:min-h-[30rem] xl:min-h-[35rem] 2xl:min-h-[45rem] mb-[25px]`}
 `;
 
 export const MovieImage = styled.img`
